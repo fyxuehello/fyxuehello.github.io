@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>动态规划之区间型问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="区间型动态规划：一般会给定一个区间或者字符串，进行一些操作最后一步会将区间/字符串去头或者去尾剩下一个区间[i,j]状态自然定义为dp[i][j]，表示区间[i,j]的最优性质">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划之区间型问题">
+<meta property="og:url" content="http://yoursite.com/2019/10/30/动态规划之区间型问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="区间型动态规划：一般会给定一个区间或者字符串，进行一些操作最后一步会将区间/字符串去头或者去尾剩下一个区间[i,j]状态自然定义为dp[i][j]，表示区间[i,j]的最优性质">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-30T02:30:43.177Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="动态规划之区间型问题">
+<meta name="twitter:description" content="区间型动态规划：一般会给定一个区间或者字符串，进行一些操作最后一步会将区间/字符串去头或者去尾剩下一个区间[i,j]状态自然定义为dp[i][j]，表示区间[i,j]的最优性质">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,16 +142,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-动态规划之区间型问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-动态规划之区间型问题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/30/动态规划之区间型问题/">动态规划之区间型问题</a>
+    <h1 class="article-title" itemprop="name">
+      动态规划之区间型问题
     </h1>
   
 
@@ -161,11 +163,41 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>区间型动态规划：<br>一般会给定一个区间或者字符串，进行一些操作<br>最后一步会将区间/字符串去头或者去尾<br>剩下一个区间[i,j]<br>状态自然定义为dp[i][j]，表示区间[i,j]的最优性质</p>
-        
-          <a class="article-more-a" href="/2019/10/30/动态规划之区间型问题/#more">more >></a>
-        
+<a id="more"></a>
+<h2 id="例题：LintCode-667-Longest-Palindromic-Subsequence"><a href="#例题：LintCode-667-Longest-Palindromic-Subsequence" class="headerlink" title="例题：LintCode 667 Longest Palindromic Subsequence"></a>例题：LintCode 667 Longest Palindromic Subsequence</h2><h3 id="1，确定状态"><a href="#1，确定状态" class="headerlink" title="1，确定状态"></a>1，确定状态</h3><p>最优策略下，产生的回文串为T，长度为M<br>情况1：长度为1，即一个字母<br>情况2：长度大于1，则必有T[0]=T[M-1]<br>设T[0]是S[i], T[M-1]是S[j]<br>T剩下的部分T[1..M-2]仍然是一个回文串，而且是S[i+1..j-1]的最长回文子串</p>
+<p>子问题：<br>• 要求S[i..j]的最长回文子串<br>• 如果S[i]=S[j]，需要知道S[i+1..j-1]的最长回文子串<br>• 否则答案是S[i+1..j]的最长回文子串或S[i..j-1]的最长回文子串<br>• 子问题<br>• 状态：设dp[i][j]为S[i..j]的最长回文子串的长度</p>
+<h3 id="2，转移方程"><a href="#2，转移方程" class="headerlink" title="2，转移方程"></a>2，转移方程</h3><p>dp[i][j]=max(dp[i+1][j], dp[i][j-1], dp[i+1][j-1]+2|S[i]==S[j]);</p>
+<h3 id="3，初始条件和边界情况"><a href="#3，初始条件和边界情况" class="headerlink" title="3，初始条件和边界情况"></a>3，初始条件和边界情况</h3><p>– f[0][0] = f[1][1] = … = f[N-1][N-1] = 1<br>• 一个字母也是一个长度为1的回文串<br>– 如果S[i] == S[i+1], f[i][i+1] = 2<br>– 如果S[i] != S[i+1], f[i][i+1] = 1</p>
+<h3 id="4，计算顺序"><a href="#4，计算顺序" class="headerlink" title="4，计算顺序"></a>4，计算顺序</h3><p>• 设f[i][j]为S[i..j]的最长回文子串的长度<br>• f[i][j] = max{f[i+1][j], f[i][j-1], f[i+1][j-1] + 2|S[i]=S[j]}<br>• 不能按照i的顺序去算<br>• 区间动态规划： 按照长度j-i从小到大的顺序去算</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> s: the maximum length of s is 1000</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: the longest palindromic subsequence's length</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindromeSubseq</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">char</span>[] ch=s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> n=ch.length;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//dp[i][j]表示区间字符ch(i,j)之间能组成的最长回文</span></span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 长度为1</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i][i]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 长度为2</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++)&#123;</span><br><span class="line">            dp[i][i+<span class="number">1</span>]=(ch[i]==ch[i+<span class="number">1</span>]) ? <span class="number">2</span>:<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 长度大于等于3</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> len=<span class="number">3</span>;len&lt;=n;len++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n-len;i++)&#123;</span><br><span class="line">                <span class="keyword">int</span> j=i+len-<span class="number">1</span>;</span><br><span class="line">                dp[i][j] = Math.max(dp[i+<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(ch[i]==ch[j])&#123;</span><br><span class="line">                    dp[i][j]=Math.max(dp[i][j],dp[i+<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">2</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印最长的回文字符串</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> s: the maximum length of s is 1000</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: the longest palindromic subsequence's length</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindromeSubseq</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">char</span>[] ch=s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> n=ch.length;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//dp[i][j]表示区间字符ch(i,j)之间能组成的最长回文</span></span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line">        <span class="comment">// 用以记录选择哪一个</span></span><br><span class="line">        <span class="keyword">int</span>[][] pi=<span class="keyword">new</span> <span class="keyword">int</span>[n][n];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 长度为1</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i][i]=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 长度为2</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++)&#123;</span><br><span class="line">            dp[i][i+<span class="number">1</span>]=(ch[i]==ch[i+<span class="number">1</span>]) ? <span class="number">2</span>:<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 长度大于等于3</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> len=<span class="number">3</span>;len&lt;=n;len++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=n-len;i++)&#123;</span><br><span class="line">                <span class="keyword">int</span> j=i+len-<span class="number">1</span>;</span><br><span class="line">                dp[i][j] = Math.max(dp[i+<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                <span class="comment">// 去头</span></span><br><span class="line">                <span class="keyword">if</span>(dp[i][j]==dp[i+<span class="number">1</span>][j])&#123;</span><br><span class="line">                    pi[i][j]=<span class="number">0</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;<span class="comment">// 去尾</span></span><br><span class="line">                    pi[i][j]=<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(ch[i]==ch[j])&#123;</span><br><span class="line">                    dp[i][j]=Math.max(dp[i][j],dp[i+<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">2</span>);</span><br><span class="line">                    <span class="comment">// 去头又去尾</span></span><br><span class="line">                    <span class="keyword">if</span>(dp[i][j]==dp[i+<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">2</span>)&#123;</span><br><span class="line">                        pi[i][j]=<span class="number">2</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] res=<span class="keyword">new</span> <span class="keyword">char</span>[dp[<span class="number">0</span>][n-<span class="number">1</span>]];</span><br><span class="line">        <span class="keyword">int</span> p=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> q=dp[<span class="number">0</span>][n-<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>,j=n-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;=j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==j)&#123;</span><br><span class="line">                res[p]=ch[i];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>==j)&#123;</span><br><span class="line">                res[p]=ch[i];</span><br><span class="line">                res[q]=ch[j];</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(pi[i][j]==<span class="number">0</span> )&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(pi[i][j]==<span class="number">1</span> )&#123;</span><br><span class="line">                    j--;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    res[p++]=ch[i];</span><br><span class="line">                    res[q--]=ch[j];</span><br><span class="line">                    i++;</span><br><span class="line">                    j--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"Results is :"</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;dp[<span class="number">0</span>][n-<span class="number">1</span>];i++)&#123;</span><br><span class="line">            System.out.print(res[i);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">""</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dp[<span class="number">0</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -174,16 +206,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/30/动态规划之区间型问题/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/30/动态规划之区间型问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/29/动态规划之背包问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">动态规划之背包问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -198,716 +289,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-动态规划之背包问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/动态规划之背包问题/">动态规划之背包问题</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/动态规划之背包问题/" class="archive-article-date">
-  	<time datetime="2019-10-29T03:39:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>动态规划之背包问题：<br>有一个背包，背包有最大承重<br>商店有若干件物品<br>每件物品有重量和价值</p>
-        
-          <a class="article-more-a" href="/2019/10/29/动态规划之背包问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/动态规划之背包问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#例题：LintCode-667-Longest-Palindromic-Subsequence"><span class="toc-number">1.</span> <span class="toc-text">例题：LintCode 667 Longest Palindromic Subsequence</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1，确定状态"><span class="toc-number">1.1.</span> <span class="toc-text">1，确定状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2，转移方程"><span class="toc-number">1.2.</span> <span class="toc-text">2，转移方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3，初始条件和边界情况"><span class="toc-number">1.3.</span> <span class="toc-text">3，初始条件和边界情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4，计算顺序"><span class="toc-number">1.4.</span> <span class="toc-text">4，计算顺序</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-事务" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/26/事务/">事务</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/26/事务/" class="archive-article-date">
-  	<time datetime="2019-09-26T13:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>事务</p>
-        
-          <a class="article-more-a" href="/2019/09/26/事务/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/26/事务/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL锁相关的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/25/MySQL锁相关的问题/">MySQL锁相关的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/25/MySQL锁相关的问题/" class="archive-article-date">
-  	<time datetime="2019-09-25T11:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>MySQL锁</p>
-        
-          <a class="article-more-a" href="/2019/09/25/MySQL锁相关的问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/25/MySQL锁相关的问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL索引与算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/23/MySQL索引与算法/">MySQL索引与算法</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/23/MySQL索引与算法/" class="archive-article-date">
-  	<time datetime="2019-09-23T13:29:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h1 id="一、InnoDB存储引擎索引"><a href="#一、InnoDB存储引擎索引" class="headerlink" title="一、InnoDB存储引擎索引"></a>一、InnoDB存储引擎索引</h1><p>InnoDB支持一下几种常见的索引</p>
-<p>B+树索引</p>
-<p>全文索引</p>
-<p>哈希索引</p>
-<p>注意：B+树索引并不能找出一个给定键值的具体行，B+树索引能找出被查找数据行的所在页，然后数据库通过把页读入内存，在内存中进行查找，最后得出想要查找的数据。</p>
-<h1 id="二、数据结构与算法"><a href="#二、数据结构与算法" class="headerlink" title="二、数据结构与算法"></a>二、数据结构与算法</h1><h2 id="1-二分查找"><a href="#1-二分查找" class="headerlink" title="1.二分查找"></a>1.二分查找</h2><p>二分查找也要折半查找，用来查找一组有序的记录数组中的某一记录，其思想是：记录按递增或递减有序化，在查找过程中采用跳跃式查找，即先以有序数组的中点进行比较，如果查找的元素小于中点元素，则待查找的元素缩小为左半部分，否则为右半部分。</p>
-<h2 id="2-二叉查找树-BST-和平衡二叉树-AVL"><a href="#2-二叉查找树-BST-和平衡二叉树-AVL" class="headerlink" title="2.二叉查找树(BST)和平衡二叉树(AVL)"></a>2.二叉查找树(BST)和平衡二叉树(AVL)</h2><p>二叉查找树(BST)中，左子树的键值总是小于根节点的键值，右子树的键值总是大于根节点的键值。</p>
-<p>二叉查找树的中序遍历是一个有序的数组。</p>
-<p>平衡二叉树:首先符合二叉查找树的定义，其次必须满足任何节点的两个子树的高度只差小于等于1。在维护一颗AVL树是需要左旋和右旋操作。</p>
-<h2 id="3-B-树"><a href="#3-B-树" class="headerlink" title="3.B+树"></a>3.B+树</h2><p>B+树是为磁盘或其他存取设备设计的一种平衡查找树。在B+树中，所有记录节点都是按照键值大小顺序放在同一层的叶子节点上，由个叶子结点指针进行连接。</p>
-<p>B+树的插入和删除操作同样需要维护B+树的特性。</p>
-<p>B+树在数据库中有一个特点是高扇出性，因此在数据库中，B+树的高度一般都在2<del>4层，也就是查找某一键值的行记录时最多需要2</del>4次IO。</p>
-<p>数据库中，B+树分为聚集索引和辅助索引，不管是聚集索引还是辅助索引，其内部仍是B+树，即高度平衡，叶子节点存放着所有的数据。</p>
-<h2 id="4-聚集索引"><a href="#4-聚集索引" class="headerlink" title="4.聚集索引"></a>4.聚集索引</h2><p>聚集索引就是按照每张表的主键构成的一颗B+树，同时叶子节点中存放的即为整张表的行记录数据，也将聚集索引的叶子节点称为数据页，每个数据页都是通过一个双向链表进行链接。</p>
-<p>聚集索引存储并不是物理上连续的，而是逻辑上连续。数据页通过双向链表链接，页按照主键顺序排序，每个页的记录也是通过双向链表链接。</p>
-<h2 id="5-辅助索引"><a href="#5-辅助索引" class="headerlink" title="5.辅助索引"></a>5.辅助索引</h2><p>辅助索引(Secondary Index)，叶子节点并不包含行记录的全部数据。叶子结点除了包换键值以外，还包含一个书签，该书签用来告诉InnoDB存储引擎可以在哪里找到索引所对应的行数据。</p>
-<p>即当通过辅助索引来查找数据时，InnoDB存储引擎会遍历辅助索引并通过叶级别的指针获得指向主键索引的主键，然后再通过主键索引来找到一个完整的行记录。</p>
-<h3 id="Fast-Index-Creation-FIC"><a href="#Fast-Index-Creation-FIC" class="headerlink" title="Fast Index Creation(FIC)"></a>Fast Index Creation(FIC)</h3><p>FIC在索引的创建过程中对表上加了S锁，因此在创建的过程中只需要对数据库的读操作，若有大量的事务需要对目标表进行写操作，那么数据库的服务同样不可用。此外，FIC只限定了辅助索引，对于主键的创建和删除同样需要重建一张表。</p>
-<h3 id="Online-Schema-Change"><a href="#Online-Schema-Change" class="headerlink" title="Online Schema Change"></a>Online Schema Change</h3><p>在线架构改变(OSC), 所谓的在线是指在事务的创建过程中，可以有读写事务对表进行操作，这提高了原有MySQL数据库的DDL操作时的并发性。</p>
-<h2 id="6-Cardinality值"><a href="#6-Cardinality值" class="headerlink" title="6.Cardinality值"></a>6.Cardinality值</h2><p>对于什么时候添加B+树索引，一般的经验是，在访问表中很少一部分时，使用B+树索引才有意义。Cardinality值非常关键，表示索引中不重复记录数量的预估值。</p>
-<h2 id="7-联合索引"><a href="#7-联合索引" class="headerlink" title="7.联合索引"></a>7.联合索引</h2><p>联合索引是指对表上多个列进行索引，本质上来说，联合索引也是一颗B+树，不用的是联合索引的键值的数量不是1，而是大于等于2。</p>
-<h2 id="8-覆盖索引"><a href="#8-覆盖索引" class="headerlink" title="8.覆盖索引"></a>8.覆盖索引</h2><p>InnoDB存储索引支持覆盖索引，即从辅助索引中就可以得到查询的记录，而不需要查询聚集索引中的记录。使用覆盖索引的一个好处就是辅助索引不包含整行记录的所有信息，故其大小远小于聚集索引，因此大大减小了IO操作。</p>
-<h2 id="9-哈希索引"><a href="#9-哈希索引" class="headerlink" title="9.哈希索引"></a>9.哈希索引</h2><h3 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h3><p>哈希表也称散列表，由直接寻址表改进而来的。在数据库中一般采用最简单的碰撞解决技术，这种技术被称为链接法。</p>
-<p>哈希索引能以 O(1) 时间进行查找，但是失去了有序性：</p>
-<p>无法用于排序与分组；</p>
-<p>只支持精确查找，无法用于部分查找和范围查找。</p>
-<p>InnoDB 存储引擎有一个特殊的功能叫“自适应哈希索引”，当某个索引值被使用的非常频繁时，会在 B+Tree 索引之上再创建一个哈希索引，这样就让 B+Tree 索引具有哈希索引的一些优点，比如快速的哈希查找。</p>
-<p>InnoDB储存引擎使用哈希算法对字典进行查找，其冲突机制采用链表的方式，哈希函数采用除法散列方式。</p>
-<h2 id="10-全文索引"><a href="#10-全文索引" class="headerlink" title="10.全文索引"></a>10.全文索引</h2><p>全文索引是将存储于数据库中的整本书或者整篇文章的任意内容信息查找出来的技术。</p>
-<p>全文索引通常采用倒排索引来实现，它在辅助表中存储了单词和单词自身在一个或多个文档中所在位置的映射。两种表现形式：</p>
-<p>inverted file index,其表现形式为{单词，单词所在文档的ID}</p>
-<p>full inverted index,其表现形式为{单词，(单词所在文档的ID，在具体文档的位置)}</p>
-<p>InnoDB全文索引采用 full inverted index,将(DocumentID，Position)视为一个ilist。在全文索引检索表中，有两个列，一个是word字段，另一个是ilist字段，并且在word字段上设有索引。倒排索引需要将word字段放在一个表中，这个表称为Auxiliary Table(辅助表)。Auxiliary Table是一个持久的表，存放在磁盘上。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/23/MySQL索引与算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL技术内幕" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/22/MySQL技术内幕/">MySQL技术内幕</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/22/MySQL技术内幕/" class="archive-article-date">
-  	<time datetime="2019-09-22T01:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h1 id="第1章-MySQL体系结构和存储引擎"><a href="#第1章-MySQL体系结构和存储引擎" class="headerlink" title="第1章 MySQL体系结构和存储引擎"></a>第1章 MySQL体系结构和存储引擎</h1><h2 id="1-1-定义数据库和实例"><a href="#1-1-定义数据库和实例" class="headerlink" title="1.1 定义数据库和实例"></a>1.1 定义数据库和实例</h2><p>数据库：物理操作系统文件或其他形式文件类型的集合。</p>
-<p>实例：MySQL数据库由后台线程以及一个共享内存区组成。</p>
-<p>在MySQL数据库中，通常一个实例对应一个数据库，但是在集群的情况下可以一个数据库对应多个实例。</p>
-<p>MySQL数据库实例在系统上表现的是一个进程。</p>
-<p>数据库是文件的集合，是依照某种数据模型组织起来并存放二级存储器中的数据集合；数据库实例是程序，是位于用户和操作系统之间的一层数据管理软件，用户对数据库数据的任何操作，包括数据库定义、数据查询、数据维护、数据库运行控制等都是在数据库实例下进行的，应用进程只有通过数据库实例才能和数据库打交道。</p>
-<p><em>MySQL由以下几部分组成</em>：</p>
-<p>连接池组件</p>
-<p>管理服务和工具组件</p>
-<p>SQL接口组件</p>
-<p>查询分析器组件</p>
-<p>优化器组件</p>
-<p>缓冲组件</p>
-<p>插件式存储引擎</p>
-<p>物理文件</p>
-<p>MySQL区别于其他数据库的一个重要特点就是其插件式的表存储引擎。存储引擎是基于表的，而不是数据库。</p>
-<p>InnoDB存储引擎支持事务，其设计目标主要是面向在线事务处理(OLTP)的应用。其特点是行锁设计、支持外键，并支持类似于Oracle的非锁定读，即默认读取操作不会产生锁。InnoDB存储引擎将数据放在一个逻辑的表空间中，这个表空间就像黑盒一样由InnoDB存储引擎自身管理。</p>
-<p><strong>脏页</strong>：</p>
-<p>脏页－linux内核中的概念，因为硬盘的读写速度远赶不上内存的速度，系统就把读写比较频繁的数据事先放到内存中，以提高读写速度，这就叫高速缓存，linux是以页作为高速缓存的单位，当进程修改了高速缓存里的数据时，该页就被内核标记为脏页，内核将会在合适的时间把脏页的数据写到磁盘中去，以保持高速缓存中的数据和磁盘中的数据是一致的。</p>
-<h1 id="第2章InnoDB体系的架构"><a href="#第2章InnoDB体系的架构" class="headerlink" title="第2章InnoDB体系的架构"></a>第2章InnoDB体系的架构</h1><p>InnoDB 1.2.x及以上版本支持ACID,行锁设计，MVCC(并发控制)，compress，dynamic页格式，Linux AIO,多回滚段，全文索引，在线索引等。</p>
-<h2 id="1-后台线程"><a href="#1-后台线程" class="headerlink" title="1 后台线程"></a>1 后台线程</h2><p>InnoDB存储引擎是多线程的模型，因此其后台有多个不同的后台线程，负责处理不同的任务。</p>
-<h3 id="1-1-Master-Thread"><a href="#1-1-Master-Thread" class="headerlink" title="1.1 Master Thread"></a>1.1 Master Thread</h3><p>Master Thread是一个非常核心的后台线程，主要负责将缓冲池中的数据异步刷新到磁盘，保证数据的一致性，包括脏页的刷新、合并插入缓冲、undo页的回收等。</p>
-<h3 id="1-2-IO-Thread"><a href="#1-2-IO-Thread" class="headerlink" title="1.2 IO Thread"></a>1.2 IO Thread</h3><p>在InnoDB中 使用了大量的AIO来处理写Io的处理，这样做可以极大提高数据库的性能。而IO Thread主要负责这些IO请求的回调(call back)处理。</p>
-<p>IO Thread 为0的是insert buffer thread，1为log thread，之后就是read IO和write IO。</p>
-<h3 id="1-3-Purge-Thread"><a href="#1-3-Purge-Thread" class="headerlink" title="1.3 Purge Thread"></a>1.3 Purge Thread</h3><p>事务被提交后，其所使用的undolog可能不在需要，因此需要PurgeThread来回收已经使用并分配的undo页。</p>
-<h3 id="1-4-Page-Cleaner-Thread"><a href="#1-4-Page-Cleaner-Thread" class="headerlink" title="1.4 Page Cleaner Thread"></a>1.4 Page Cleaner Thread</h3><p>Page Cleaner Thread 是在InnoDB 1.2.x版本引入的。起作用是将之前版本中的脏页的刷新操作都放入到单独的线程来完成。其目的是减轻Master Thread的压力。</p>
-<h2 id="2-内存"><a href="#2-内存" class="headerlink" title="2 内存"></a>2 内存</h2><h3 id="2-1-缓冲池"><a href="#2-1-缓冲池" class="headerlink" title="2.1 缓冲池"></a>2.1 缓冲池</h3><p>InnoDB存储引擎是基于磁盘存储的，并将其中的记录按照页的方式进行管理。因此可将其视为基于磁盘的数据库系统，由于CPU和磁盘速度之间的鸿沟，通常使用缓冲技术来提高数据库的整体性能。</p>
-<p>缓冲池简单来说就是一块内存区域，通过内存的速度来弥补磁盘速度较慢对数据库性能的影响。在数据库读取页的操作时，首先将从磁盘读到的页存放在缓冲池中，这个过程称为将页“FIX”在缓冲池中。下一次在读取相同的页时，首先先在缓冲池中进行查找，若命中就直接读取该页。否则，读取磁盘上的页。</p>
-<p>对于数据库中页的修改操作，首先修改在缓冲池中的页，然后再以一定频率刷新到磁盘上。这里需要注意的是，页从缓冲池刷新到磁盘的操作不是每次页发生修改时触发，而是以一种checkpoint的机制刷新到磁盘。</p>
-<p>缓存池中的数据类型有：索引页、数据页、undo页、插入缓冲(insert buffer)、自适应哈希索引、InnoDB存储的锁信息、数据字典信息等。</p>
-<p>从InnoDB 1.x开始，允许有多个缓冲池实例，每个页根据哈希值平均分配到不同的缓冲池实例中。这样做的好处时减少数据库内部资源的竞争，增加数据库的并发处理能力。</p>
-<h2 id="2-2-LRU-list-Free-list-和Flush-list"><a href="#2-2-LRU-list-Free-list-和Flush-list" class="headerlink" title="2.2 LRU list Free list 和Flush list"></a>2.2 LRU list Free list 和Flush list</h2><p>通常来说数据库的缓冲池通过LRU(Latest Recent Used)算法，即最频繁使用的放在LRU列表的最前端，而最少使用的页放在列表的尾端。当缓冲池不能存放新读取的页时，将首先释放LRU尾端的页。</p>
-<p>InnoDB中缓冲池的大小默认16kb，同样使用LRU算法对缓冲池管理。</p>
-<p>InnoDB存储引擎对LRU做了优化，在LRU列表中加入了midpoint位置。新读取到的页，虽然是最新访问的页，但并不是直接放在LRU列表的头部。默认情况下，在列表的3/8的位置。</p>
-<p>InnoDB为什么不采用朴素的LRU算法，直接把数据放在列表的头部呢？这是因为若是直接将读取到的页放在首部，那么某些SQL操作可能使缓冲池的页全部刷出，从而影响缓冲池的效率。常见的这类操作有索引或者数据的扫描，这类操作需要访问到表中的许多页，而且这仅仅是为了查询的需要，并不是活跃的热点数据。</p>
-<p>LRU用来管理已经读取的页，当数据库刚刚启用时，LRU数据库是空的，那么页都存放在Free list列表中。当需要从缓冲池分页时，首先从Free list检查是否有可用的空闲页，若有的话，直接将该页从Free列表中删除，放入到LRU列表中。</p>
-<p>在LRU列表中的页被修改后，该页成为脏页，即缓冲池中的数据和磁盘中的数据不一致，这是数据库会根据checkpoint机制将脏页刷新回磁盘。而Flush列表中的页就是脏页的列表。</p>
-<p>LRU管理缓冲池中页的可用性，Flush列表中管理将页刷新回磁盘，二者互不影响。</p>
-<h2 id="2-3-重做日志缓冲"><a href="#2-3-重做日志缓冲" class="headerlink" title="2.3 重做日志缓冲"></a>2.3 重做日志缓冲</h2><p>InnoDB中内存区除了缓冲池外，还有重做日志缓冲(redo log buffer)。InnoDB首先将重做日志信息放入到这个缓冲池，然后再以一定的频率刷新重做缓冲日志。</p>
-<p>重做缓冲日志会在下面的三种情况将日志缓冲区的内容刷新到外部的磁盘重做日志文件中。</p>
-<p>1 Master Thread 每一秒将重做日志的缓冲刷新到重做日志文件；</p>
-<p>2 每个事务提交时会做日志缓冲刷新到磁盘日志文件；</p>
-<p>3 当日志缓冲池剩余空间小于1/2时，重做缓冲日志会刷新到日志文件。</p>
-<h2 id="2-4-额外的内存池"><a href="#2-4-额外的内存池" class="headerlink" title="2.4 额外的内存池"></a>2.4 额外的内存池</h2><p>在InnoDB存储引擎中，对内存的管理是通过一种叫做内存堆的方式进行的。</p>
-<h1 id="3-checkpoint技术"><a href="#3-checkpoint技术" class="headerlink" title="3 checkpoint技术"></a>3 checkpoint技术</h1><p>当update，delete操作时，数据库需要将新版本的页从缓冲池刷新到磁盘。</p>
-<p>checkpoint要解决的问题：</p>
-<p>缩短数据库的恢复时间；</p>
-<p>缓冲池不够用时，将脏页舒心到磁盘；</p>
-<p>重做日志不可用时，刷新脏页。</p>
-<p>当数据库发生宕机时，只需要在checkpoint之后重做日志进行恢复。</p>
-<p>InnoDB存储引擎内部有两种checkpoint，分别为：</p>
-<p>sharp checkpoint</p>
-<p>fuzzy checkpoint</p>
-<p>sharp checkpoint发生在数据库关闭时，将所有的脏页刷新到磁盘。</p>
-<p>fuzzy checkpoint发生的情况：</p>
-<p>master thread checkpoint;</p>
-<p>flush_lru_list checkpoint;</p>
-<p>async/sync flush checkpoint;</p>
-<p>dirty page too much checkpoint;</p>
-<h1 id="4-Master-Thread工作方式"><a href="#4-Master-Thread工作方式" class="headerlink" title="4 Master Thread工作方式"></a>4 Master Thread工作方式</h1><p>每秒一次的操作包括：</p>
-<p>日志缓冲刷新到磁盘，即使这个事务还没有提交（总是）；</p>
-<p>合并插入缓冲（可能）；</p>
-<p>至多刷新100个InnoDB的缓冲池中的脏页到磁盘（可能）；</p>
-<p>如果当前没有用户活动，则切换到background loop（可能）；</p>
-<p>每10秒一次的操作：</p>
-<p>刷新100个脏页到磁盘（可能的情况下）；</p>
-<p>合并至多5个插入缓存（总是）；</p>
-<p>将日志缓存刷新到磁盘（总是）；</p>
-<p>删除无用的undo页（总是）；</p>
-<p>刷新100个或者10个脏页到磁盘（总是）；</p>
-<h1 id="5-InnoDB关键特性"><a href="#5-InnoDB关键特性" class="headerlink" title="5 InnoDB关键特性"></a>5 InnoDB关键特性</h1><p>关键特性包括：</p>
-<p>插入缓存（Insert Buffer）</p>
-<p>两次写（Double Write）</p>
-<p>自适应哈希索引（Adaptive Hash Index）</p>
-<p>异步（Async IO）</p>
-<p>刷新邻接页(Flush Neighbor Page)</p>
-<h2 id="插入缓存"><a href="#插入缓存" class="headerlink" title="插入缓存"></a>插入缓存</h2><p>InnoDB存储引擎开创性的设计了Insert Buffer，对于非聚集索引的插入或更新操作，不是每一次直接插入到索引页中，而是先判断插入的非聚集索引项是否在缓冲池中，若在的话，直接插入。若不在，先放入到一个Insert Buffer对象中，然后以一定频率和情况进行Insert Buffer和辅助索引页子节点的merge操作，这是通常将多个插入合并到一个操作中。</p>
-<p>Insert Buffer使用需要同时满足两个条件：</p>
-<p>索引是辅助索引；</p>
-<p>索引不是唯一的；</p>
-<p>Insert Buffer 的设计思想是，当按辅助索引插入时先将记录放在Insert Bufert中，然后在后台慢慢的合并回辅助索引页中。</p>
-<p>其实Insert Buffer的数据结构是一颗B+树，其内存同样使用缓冲池。IBUF_POOL_SIZE_PER_MAX_SIZE定义了Insert Buffer 最多占用缓冲池的大小，默认值为2，表示最多可能占用1/2的缓冲池空间。</p>
-<h2 id="两次写"><a href="#两次写" class="headerlink" title="两次写"></a>两次写</h2><p>doublewrite由两部分组成，一部分是<em>内存</em>中的doublewrite buffer，大小为2MB，另一部分是物理磁盘上共享表空间中连续的128个页，即连个区，大小同样为2MB。在对缓冲池中的脏页进行刷新时，并不直接写磁盘，而是会通过memcpy函数将脏页先复制到内存中的doublewrite buffer，之后通过doublewrite buffer再分为两次，每次1MB顺序地写入共享表空间的物理磁盘上，然后马上调用fsync函数，同步磁盘，避免缓冲带来的问题。</p>
-<h2 id="自适应哈希索引"><a href="#自适应哈希索引" class="headerlink" title="自适应哈希索引"></a>自适应哈希索引</h2><p>InnoDB存储引擎会根据访问的频率和模式自动的为某些热点页建立哈希索引。</p>
-<h2 id="异步-IO"><a href="#异步-IO" class="headerlink" title="异步 IO"></a>异步 IO</h2><p>在InnoDB中。read ahead读取是通过AIO完成的，脏页的刷新也是通过AIO完成的。</p>
-<h2 id="刷新邻接页"><a href="#刷新邻接页" class="headerlink" title="刷新邻接页"></a>刷新邻接页</h2><p>当刷新一个脏页时，InnoDB会检测该页素所在区的所有页，如果是脏页，那么一起进行刷新。s</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/22/MySQL技术内幕/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-学习MySQL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/14/学习MySQL/">学习MySQL</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/14/学习MySQL/" class="archive-article-date">
-  	<time datetime="2019-09-14T08:53:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>MySQL常用知识点</p>
-        
-          <a class="article-more-a" href="/2019/09/14/学习MySQL/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/14/学习MySQL/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-常用排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/14/常用排序算法/">常用排序算法</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/14/常用排序算法/" class="archive-article-date">
-  	<time datetime="2019-09-14T06:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>冒泡排序、选择排序、插入排序、快速排序、归并排序</strong></p>
-        
-          <a class="article-more-a" href="/2019/09/14/常用排序算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/14/常用排序算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-spring-boot-starter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/14/spring-boot-starter/">spring-boot-starter</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/14/spring-boot-starter/" class="archive-article-date">
-  	<time datetime="2019-09-14T04:00:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>spring-boot-starter</p>
-        
-          <a class="article-more-a" href="/2019/09/14/spring-boot-starter/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/14/spring-boot-starter/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringBoot之四个核心" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/14/SpringBoot之四个核心/">SpringBoot之四个核心</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/14/SpringBoot之四个核心/" class="archive-article-date">
-  	<time datetime="2019-09-14T03:46:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SpringBoot最重要的四个核心："><a href="#SpringBoot最重要的四个核心：" class="headerlink" title="SpringBoot最重要的四个核心："></a>SpringBoot最重要的四个核心：</h1>
-        
-          <a class="article-more-a" href="/2019/09/14/SpringBoot之四个核心/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/09/14/SpringBoot之四个核心/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -930,8 +337,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
