@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>动态规划之双序列型问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="双序列型问题：题目：两个一维序列或字符串突破口：-串A和串B的最后一个字符是否匹配-是否需要串A/串B的最后一个字符-缩减问题的规模 数组下标表示序列A前i个，序列B前j个：dp[i][j]初始条件和边界情况-空串如何处理-计数型(情况1+情况2+…)以及最值型(min/max(情况1，情况2，…)); 匹配情况下切勿忘记+1(操作数多1次，匹配长度多1)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划之双序列型问题">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/动态规划之双序列型问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="双序列型问题：题目：两个一维序列或字符串突破口：-串A和串B的最后一个字符是否匹配-是否需要串A/串B的最后一个字符-缩减问题的规模 数组下标表示序列A前i个，序列B前j个：dp[i][j]初始条件和边界情况-空串如何处理-计数型(情况1+情况2+…)以及最值型(min/max(情况1，情况2，…)); 匹配情况下切勿忘记+1(操作数多1次，匹配长度多1)">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-30T08:04:51.912Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="动态规划之双序列型问题">
+<meta name="twitter:description" content="双序列型问题：题目：两个一维序列或字符串突破口：-串A和串B的最后一个字符是否匹配-是否需要串A/串B的最后一个字符-缩减问题的规模 数组下标表示序列A前i个，序列B前j个：dp[i][j]初始条件和边界情况-空串如何处理-计数型(情况1+情况2+…)以及最值型(min/max(情况1，情况2，…)); 匹配情况下切勿忘记+1(操作数多1次，匹配长度多1)">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,295 +142,179 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-动态规划之双序列型问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      动态规划之双序列型问题
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
+
+        
+        <a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
   	<time datetime="2019-10-31T07:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/动态规划之双序列型问题/">动态规划之双序列型问题</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>双序列型问题：<br>题目：两个一维序列或字符串<br>突破口：<br>-串A和串B的最后一个字符是否匹配<br>-是否需要串A/串B的最后一个字符<br>-缩减问题的规模</p>
+<p>数组下标表示序列A前i个，序列B前j个：dp[i][j]<br>初始条件和边界情况<br>-空串如何处理<br>-计数型(情况1+情况2+…)以及最值型(min/max(情况1，情况2，…));</p>
+<p>匹配情况下切勿忘记+1(操作数多1次，匹配长度多1)</p>
+<a id="more"></a>
+<p>例题：</p>
+<p>LintCode 77 Longest Common Subsequence</p>
+<p>• 题意：<br>• 给定两个字符串A，B<br>• 一个字符串的子串是这个字符串去掉某些字符（可能0个）之后剩下的<br>字符串<br>• 找到两个字符串的最长公共子串的长度<br>• 例子：<br>• 输入：A=“jiuzhang”, B=“lijiang”<br>• 输出：5（最长公共子串是jiang ）</p>
+<h2 id="1，确定状态"><a href="#1，确定状态" class="headerlink" title="1，确定状态"></a>1，确定状态</h2><p>• 设A长度是m, B长度是n<br>• 现在我们考虑最优策略产生出的最长公共子串（虽然还不知道是什么）<br>• 最后一步：观察A[m-1]和B[n-1]这两个字符是否作为一个对子在最优策略中</p>
+<p>子问题<br>• 要求A[0..m-1]和B[0..n-2]的最长公共子串，A[0..m-2]和B[0..n-1]的最长<br>公共子串和A[0..m-2]和B[0..n-2]的最长公共子串<br>• 原来是求A[0..m-1]和B[0..n-1]的最长公共子串<br>• 子问题<br>• 状态：设dp[i][j]为A前i个字符A[0..i-1]和B前j个字符[0..j-1]的最长公共子串的长度</p>
+<h2 id="2，转移方程"><a href="#2，转移方程" class="headerlink" title="2，转移方程"></a>2，转移方程</h2><p>• 设dp[i][j]为A前i个字符A[0..i-1]和B前j个字符[0..j-1]的最长公共子串的长度<br>• 要求dp[m][n]<br>        dp[i][j] = max{dp[i-1][j], dp[i][j-1], dp[i-1][j-1]+1|A[i-1]=B[j-1]}</p>
+<h2 id="3，初始条件和边界情况"><a href="#3，初始条件和边界情况" class="headerlink" title="3，初始条件和边界情况"></a>3，初始条件和边界情况</h2><p>• dp[i][j]为A前i个字符A[0..i-1]和B前j个字符[0..j-1]的最长公共子串的长度<br>• 转移方程：dp[i][j] = max{dp[i-1][j], dp[i][j-1], dp[i-1][j-1]+1|A[i-1]=B[j-1]}<br>• 初始条件：空串和任何串的最长公共子串长度是0<br>– dp[0][j] = 0, j=0..n<br>– dp[i][0] = 0, i=0..m</p>
+<h2 id="4，计算顺序"><a href="#4，计算顺序" class="headerlink" title="4，计算顺序"></a>4，计算顺序</h2><p>• dp[0][0], dp[0][1], …, dp[0][n]<br>• dp[1][0], dp[1][1], …, dp[1][n]<br>• …<br>• dp[m][0], dp[m][1], …, dp[m][n]<br>• 答案是dp[m][n]<br>• 时间复杂度（计算步数）O(MN)，空间复杂度（数组大小）O(MN)<br>• 可以用滚动数组优化空间至O(N)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: A string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> B: A string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: The length of longest common subsequence of A and B</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(String A, String B)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">char</span>[] str1=A.toCharArray();</span><br><span class="line">        <span class="keyword">char</span>[] str2=B.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> m=str1.length;</span><br><span class="line">        <span class="keyword">int</span> n=str2.length;</span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//dp[0][0]=0;</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=m;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=n;j++)&#123;</span><br><span class="line">                <span class="comment">// 初始条件</span></span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j]=<span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i][j]=Math.max(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(str1[i-<span class="number">1</span>]==str2[j-<span class="number">1</span>])&#123;</span><br><span class="line">                    dp[i][j]=Math.max(dp[i][j],dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> A: A string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> B: A string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: The length of longest common subsequence of A and B</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(String A, String B)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="keyword">char</span>[] str1=A.toCharArray();</span><br><span class="line">        <span class="keyword">char</span>[] str2=B.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> m=str1.length;</span><br><span class="line">        <span class="keyword">int</span> n=str2.length;</span><br><span class="line">        <span class="comment">//设f[i][j]为A前i个字符A[0..i-1]和B前j个字符[0..j-1]的最长公共子串的长度</span></span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span>[][] pi=<span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="comment">//dp[0][0]=0;</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=m;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=n;j++)&#123;</span><br><span class="line">                <span class="comment">// 初始条件</span></span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j]=<span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i][j]=Math.max(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>]);</span><br><span class="line">                <span class="keyword">if</span>(dp[i][j]==dp[i-<span class="number">1</span>][j])&#123;</span><br><span class="line">                    pi[i][j]=<span class="number">0</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    pi[i][j]=<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(str1[i-<span class="number">1</span>]==str2[j-<span class="number">1</span>])&#123;</span><br><span class="line">                    dp[i][j]=Math.max(dp[i][j],dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>);</span><br><span class="line">                           <span class="keyword">if</span>(dp[i][j]==dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+<span class="number">1</span>)&#123;</span><br><span class="line">                        pi[i][j]=<span class="number">2</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;                                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] res=<span class="keyword">new</span> <span class="keyword">char</span>[dp[m][n]];</span><br><span class="line">        <span class="keyword">int</span> p=dp[m][n]-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> i=m;</span><br><span class="line">        <span class="keyword">int</span> j=n;</span><br><span class="line">        <span class="keyword">while</span>(i&gt;<span class="number">0</span> &amp;&amp; j&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pi[i][j]==<span class="number">0</span>)&#123;</span><br><span class="line">                i--;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(pi[i][j]==<span class="number">1</span>)&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                res[p]=str1[i-<span class="number">1</span>];</span><br><span class="line">                i--;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"longestCommonSubsequence:"</span>);</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;dp[m][n];i++)&#123;</span><br><span class="line">            System.out.println(res[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">""</span>);</span><br><span class="line">        <span class="keyword">return</span> dp[m][n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
 
-        <div class="article-info info-on-right">
-          
-          
-
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/31/动态规划之双序列型问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/30/动态规划之区间型问题/" class="archive-article-date">
-  	<time datetime="2019-10-30T01:47:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/30/动态规划之区间型问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">动态规划之区间型问题</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/30/动态规划之区间型问题/">动态规划之区间型问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，确定状态"><span class="toc-number">1.</span> <span class="toc-text">1，确定状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，转移方程"><span class="toc-number">2.</span> <span class="toc-text">2，转移方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3，初始条件和边界情况"><span class="toc-number">3.</span> <span class="toc-text">3，初始条件和边界情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4，计算顺序"><span class="toc-number">4.</span> <span class="toc-text">4，计算顺序</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/动态规划之背包问题/" class="archive-article-date">
-  	<time datetime="2019-10-29T03:39:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/动态规划之背包问题/">动态规划之背包问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/26/事务/" class="archive-article-date">
-  	<time datetime="2019-09-26T13:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/26/事务/">事务</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/25/MySQL锁相关的问题/" class="archive-article-date">
-  	<time datetime="2019-09-25T11:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/25/MySQL锁相关的问题/">MySQL锁相关的问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/23/MySQL索引与算法/" class="archive-article-date">
-  	<time datetime="2019-09-23T13:29:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/23/MySQL索引与算法/">MySQL索引与算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/22/MySQL技术内幕/" class="archive-article-date">
-  	<time datetime="2019-09-22T01:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/22/MySQL技术内幕/">MySQL技术内幕</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/学习MySQL/" class="archive-article-date">
-  	<time datetime="2019-09-14T08:53:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/学习MySQL/">学习MySQL</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/常用排序算法/" class="archive-article-date">
-  	<time datetime="2019-09-14T06:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/常用排序算法/">常用排序算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/spring-boot-starter/" class="archive-article-date">
-  	<time datetime="2019-09-14T04:00:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/spring-boot-starter/">spring-boot-starter</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -450,8 +338,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
