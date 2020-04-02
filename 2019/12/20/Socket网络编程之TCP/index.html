@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>Socket网络编程之TCP | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/page/2/index.html">
+  <meta name="description" content="What is TCP?Transmission Control Protocol,缩写TCPTCP是传输控制协议，一种面向连接的，可靠的，基于字节流的传输层通信协议；TCP需要三次握手建立连接，四次挥手释放连接；TCP具有校验机制、可靠、数据传输稳定；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket网络编程之TCP">
+<meta property="og:url" content="http://yoursite.com/2019/12/20/Socket网络编程之TCP/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="What is TCP?Transmission Control Protocol,缩写TCPTCP是传输控制协议，一种面向连接的，可靠的，基于字节流的传输层通信协议；TCP需要三次握手建立连接，四次挥手释放连接；TCP具有校验机制、可靠、数据传输稳定；">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-02T13:54:02.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Socket网络编程之TCP">
+<meta name="twitter:description" content="What is TCP?Transmission Control Protocol,缩写TCPTCP是传输控制协议，一种面向连接的，可靠的，基于字节流的传输层通信协议；TCP需要三次握手建立连接，四次挥手释放连接；TCP具有校验机制、可靠、数据传输稳定；">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,214 +142,172 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Socket网络编程之TCP" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Socket网络编程之TCP
+    </h1>
+  
+
+        
+        <a href="/2019/12/20/Socket网络编程之TCP/" class="archive-article-date">
+  	<time datetime="2019-12-20T13:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="What-is-TCP"><a href="#What-is-TCP" class="headerlink" title="What is TCP?"></a>What is TCP?</h1><p>Transmission Control Protocol,缩写TCP<br>TCP是传输控制协议，一种面向连接的，可靠的，基于字节流的传输层通信协议；<br>TCP需要三次握手建立连接，四次挥手释放连接；<br>TCP具有校验机制、可靠、数据传输稳定；</p>
+<a id="more"></a>
+
+<h1 id="TCP可以做什么？"><a href="#TCP可以做什么？" class="headerlink" title="TCP可以做什么？"></a>TCP可以做什么？</h1><p>聊天消息传输、推送<br>单人语音、视频聊天<br>限制：无法进行广播、多播等操作</p>
+<h1 id="TCP传输的可靠性？"><a href="#TCP传输的可靠性？" class="headerlink" title="TCP传输的可靠性？"></a>TCP传输的可靠性？</h1><p>1.排序、顺序发送、顺序组装(首先，当我们发送数据时TCP会将数据拆分为不同的片段，然后把片段进行排序，最后把刚刚排序好的片段顺序组装进行发送)；<br>2.丢弃、超时<br>3.重发机制，定时器</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/学习MySQL/" class="archive-article-date">
-  	<time datetime="2019-09-14T08:53:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/学习MySQL/">学习MySQL</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/20/Socket网络编程之TCP/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/常用排序算法/" class="archive-article-date">
-  	<time datetime="2019-09-14T06:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/10/Socket网络编程之UDP广播/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Socket网络编程之UDP广播</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/常用排序算法/">常用排序算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-TCP"><span class="toc-number">1.</span> <span class="toc-text">What is TCP?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP可以做什么？"><span class="toc-number">2.</span> <span class="toc-text">TCP可以做什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP传输的可靠性？"><span class="toc-number">3.</span> <span class="toc-text">TCP传输的可靠性？</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/spring-boot-starter/" class="archive-article-date">
-  	<time datetime="2019-09-14T04:00:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/spring-boot-starter/">spring-boot-starter</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/SpringBoot之四个核心/" class="archive-article-date">
-  	<time datetime="2019-09-14T03:46:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/SpringBoot之四个核心/">SpringBoot之四个核心</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/13/SpringBootAppliccation详解/" class="archive-article-date">
-  	<time datetime="2019-09-13T03:26:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/13/SpringBootAppliccation详解/">SpringBootApplication详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/13/Spring-IoC/" class="archive-article-date">
-  	<time datetime="2019-09-13T01:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/13/Spring-IoC/">Spring IoC</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/11/二叉树的前序中序后序和层序遍历的总结/" class="archive-article-date">
-  	<time datetime="2019-09-11T11:40:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/11/二叉树的前序中序后序和层序遍历的总结/">二叉树的前序中序后序和层序遍历的总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2019/">&laquo; Prev</a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -369,8 +331,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

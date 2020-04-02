@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019 | Hexo</title>
+  <title>Socket网络编程之UDP广播 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/page/2/index.html">
+  <meta name="description" content="What is UDP?User Datagram Protocol,缩写为UDP；UDP是一种用户数据报协议，又称用户数据报文协议；UDP是一个简单的面向数据包的传输层协议；UDP是用户数据协议，非连接协议；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket网络编程之UDP广播">
+<meta property="og:url" content="http://yoursite.com/2019/12/10/Socket网络编程之UDP广播/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="What is UDP?User Datagram Protocol,缩写为UDP；UDP是一种用户数据报协议，又称用户数据报文协议；UDP是一个简单的面向数据包的传输层协议；UDP是用户数据协议，非连接协议；">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-02T13:27:06.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Socket网络编程之UDP广播">
+<meta name="twitter:description" content="What is UDP?User Datagram Protocol,缩写为UDP；UDP是一种用户数据报协议，又称用户数据报文协议；UDP是一个简单的面向数据包的传输层协议；UDP是用户数据协议，非连接协议；">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,214 +142,189 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Socket网络编程之UDP广播" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Socket网络编程之UDP广播
+    </h1>
+  
+
+        
+        <a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
+  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="What-is-UDP"><a href="#What-is-UDP" class="headerlink" title="What is UDP?"></a>What is UDP?</h1><p>User Datagram Protocol,缩写为UDP；<br>UDP是一种用户数据报协议，又称用户数据报文协议；<br>UDP是一个简单的面向数据包的传输层协议；<br>UDP是用户数据协议，非连接协议；</p>
+<a id="more"></a>
+
+<h1 id="UDP为什么不可靠？"><a href="#UDP为什么不可靠？" class="headerlink" title="UDP为什么不可靠？"></a>UDP为什么不可靠？</h1><p>UDP一旦把应用程序发给网络层的数据发送出去，就不保留数据备份；<br>UDP在IP数据包的头部仅仅加入例如复用和数据校验字段；<br>在UDP的发送端只负责生产数据，接收端从网络中抓取数据；<br>UDP结构简单、无校验、速度快、容易丢包、可广播；</p>
+<h1 id="UDP能做什么？"><a href="#UDP能做什么？" class="headerlink" title="UDP能做什么？"></a>UDP能做什么？</h1><p>DNS、TFTP、SNMP<br>视频、音频、普通数据；</p>
+<h1 id="UDP包一次最多能发送多少字节？"><a href="#UDP包一次最多能发送多少字节？" class="headerlink" title="UDP包一次最多能发送多少字节？"></a>UDP包一次最多能发送多少字节？</h1><p>在UDP Header中length用了16位(两个byte)：2^16-1=65535个字节；<br>自身协议占用：32+32=64位(8个byte)</p>
+<p>所以最多能发送65507个byte</p>
+<h1 id="发送广播Demo"><a href="#发送广播Demo" class="headerlink" title="发送广播Demo"></a>发送广播Demo</h1><h2 id="UDP-Searcher"><a href="#UDP-Searcher" class="headerlink" title="UDP Searcher"></a>UDP Searcher</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramPacket;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramSocket;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * UDP 提供者，用于提供服务</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPProvider</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 生成一份唯一标示</span></span><br><span class="line">        String sn = UUID.randomUUID().toString();</span><br><span class="line">        Provider provider = <span class="keyword">new</span> Provider(sn);</span><br><span class="line">        provider.start();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取任意键盘信息后可以退出</span></span><br><span class="line">        <span class="comment">//noinspection ResultOfMethodCallIgnored</span></span><br><span class="line">        System.in.read();</span><br><span class="line">        provider.exit();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Provider</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> String sn;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> done = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">private</span> DatagramSocket ds = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        Provider(String sn) &#123;</span><br><span class="line">            <span class="keyword">super</span>();</span><br><span class="line">            <span class="keyword">this</span>.sn = sn;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.run();</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">"UDPProvider Started."</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 监听20000 端口</span></span><br><span class="line">                ds = <span class="keyword">new</span> DatagramSocket(<span class="number">20000</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">while</span> (!done) &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 构建接收实体</span></span><br><span class="line">                    <span class="keyword">final</span> <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">512</span>];</span><br><span class="line">                    DatagramPacket receivePack = <span class="keyword">new</span> DatagramPacket(buf, buf.length);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 接收</span></span><br><span class="line">                    ds.receive(receivePack);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 打印接收到的信息与发送者的信息</span></span><br><span class="line">                    <span class="comment">// 发送者的IP地址</span></span><br><span class="line">                    String ip = receivePack.getAddress().getHostAddress();</span><br><span class="line">                    <span class="keyword">int</span> port = receivePack.getPort();</span><br><span class="line">                    <span class="keyword">int</span> dataLen = receivePack.getLength();</span><br><span class="line">                    String data = <span class="keyword">new</span> String(receivePack.getData(), <span class="number">0</span>, dataLen);</span><br><span class="line">                    System.out.println(<span class="string">"UDPProvider receive form ip:"</span> + ip + <span class="string">"\tport:"</span> + port + <span class="string">"\tdata:"</span> + data);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 解析端口号</span></span><br><span class="line">                    <span class="keyword">int</span> responsePort = MessageCreator.parsePort(data);</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (responsePort != -<span class="number">1</span>) &#123;</span><br><span class="line">                        <span class="comment">// 构建一份回送数据</span></span><br><span class="line">                        String responseData = MessageCreator.buildWithSn(sn);</span><br><span class="line">                        <span class="keyword">byte</span>[] responseDataBytes = responseData.getBytes();</span><br><span class="line">                        <span class="comment">// 直接根据发送者构建一份回送信息</span></span><br><span class="line">                        ds.send(<span class="keyword">new</span> DatagramPacket(responseDataBytes, responseDataBytes.length, receivePack.getAddress(), responsePort));</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ignored) &#123;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                close();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 完成</span></span><br><span class="line">            System.out.println(<span class="string">"UDPProvider Finished."</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (ds != <span class="keyword">null</span>) &#123;</span><br><span class="line">                ds.close();</span><br><span class="line">                ds = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 提供结束</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">exit</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            done = <span class="keyword">true</span>;</span><br><span class="line">            close();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="UDP-Searcher-1"><a href="#UDP-Searcher-1" class="headerlink" title="UDP Searcher"></a>UDP Searcher</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.*;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * UDP 搜索者，用于搜索服务支持方</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPSearcher</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LISTEN_PORT = <span class="number">30000</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"UDPSearcher Started."</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开始监听</span></span><br><span class="line">        Listener listener = listen();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//发送一个广播，用于搜索 UDP  通信端</span></span><br><span class="line">        sendBroadcast();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取任意键盘信息后可以退出</span></span><br><span class="line">        <span class="comment">//noinspection ResultOfMethodCallIgnored</span></span><br><span class="line">        System.in.read();</span><br><span class="line"></span><br><span class="line">        List&lt;Device&gt; devices = listener.getDevicesAndClose();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Device device : devices) &#123;</span><br><span class="line">            System.out.println(<span class="string">"Device:"</span> + device.toString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 完成</span></span><br><span class="line">        System.out.println(<span class="string">"UDPSearcher Finished."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Listener <span class="title">listen</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"UDPSearcher start listen."</span>);</span><br><span class="line">        CountDownLatch countDownLatch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">        Listener listener = <span class="keyword">new</span> Listener(LISTEN_PORT, countDownLatch);</span><br><span class="line">        listener.start();</span><br><span class="line">        <span class="comment">//listen 启动完毕后才返回</span></span><br><span class="line">        countDownLatch.await();</span><br><span class="line">        <span class="keyword">return</span> listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendBroadcast</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"UDPSearcher sendBroadcast started."</span>);</span><br><span class="line">        <span class="comment">// 作为搜索方，让系统自动分配端口</span></span><br><span class="line">        DatagramSocket ds = <span class="keyword">new</span> DatagramSocket();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构建一份请求数据</span></span><br><span class="line">        String requestData = MessageCreator.buildWithPort(LISTEN_PORT);</span><br><span class="line">        <span class="keyword">byte</span>[] requestDataBytes = requestData.getBytes();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 直接构建packet</span></span><br><span class="line">        DatagramPacket requestPacket = <span class="keyword">new</span> DatagramPacket(requestDataBytes, requestDataBytes.length);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 20000端口, 广播地址</span></span><br><span class="line">        requestPacket.setAddress(InetAddress.getByName(<span class="string">"255.255.255.255"</span>));</span><br><span class="line">        requestPacket.setPort(<span class="number">20000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发送</span></span><br><span class="line">        ds.send(requestPacket);</span><br><span class="line">        ds.close();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 完成</span></span><br><span class="line">        System.out.println(<span class="string">"UDPSearcher sendBroadcast finished."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Device</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> port;</span><br><span class="line">        <span class="keyword">final</span> String ip;</span><br><span class="line">        <span class="keyword">final</span> String sn;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="title">Device</span><span class="params">(<span class="keyword">int</span> port, String ip, String sn)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.port = port;</span><br><span class="line">            <span class="keyword">this</span>.ip = ip;</span><br><span class="line">            <span class="keyword">this</span>.sn = sn;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Device&#123;"</span> +</span><br><span class="line">                    <span class="string">"port="</span> + port +</span><br><span class="line">                    <span class="string">", ip='"</span> + ip + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">", sn='"</span> + sn + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">'&#125;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Listener</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> listenPort;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch countDownLatch;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Device&gt; devices = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> done = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">private</span> DatagramSocket ds = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        Listener(<span class="keyword">int</span> listenPort, CountDownLatch countDownLatch) &#123;</span><br><span class="line">            <span class="keyword">super</span>();</span><br><span class="line">            <span class="keyword">this</span>.listenPort = listenPort;</span><br><span class="line">            <span class="keyword">this</span>.countDownLatch = countDownLatch;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.run();</span><br><span class="line">            <span class="comment">// 通知已启动</span></span><br><span class="line">            countDownLatch.countDown();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 监听回送端口</span></span><br><span class="line">                ds = <span class="keyword">new</span> DatagramSocket(listenPort);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">while</span> (!done) &#123;</span><br><span class="line">                    <span class="comment">// 构建接收实体</span></span><br><span class="line">                    <span class="keyword">final</span> <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">512</span>];</span><br><span class="line">                    DatagramPacket receivePack = <span class="keyword">new</span> DatagramPacket(buf, buf.length);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 接收</span></span><br><span class="line">                    ds.receive(receivePack);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 打印接收到的信息与发送者的信息</span></span><br><span class="line">                    <span class="comment">// 发送者的IP地址</span></span><br><span class="line">                    String ip = receivePack.getAddress().getHostAddress();</span><br><span class="line">                    <span class="keyword">int</span> port = receivePack.getPort();</span><br><span class="line">                    <span class="keyword">int</span> dataLen = receivePack.getLength();</span><br><span class="line">                    String data = <span class="keyword">new</span> String(receivePack.getData(), <span class="number">0</span>, dataLen);</span><br><span class="line">                    System.out.println(<span class="string">"UDPSearcher receive form ip:"</span> + ip + <span class="string">"\tport:"</span> + port + <span class="string">"\tdata:"</span> + data);</span><br><span class="line"></span><br><span class="line">                    String sn = MessageCreator.parseSn(data);</span><br><span class="line">                    <span class="keyword">if</span> (sn != <span class="keyword">null</span>) &#123;</span><br><span class="line">                            Device device = <span class="keyword">new</span> Device(port, ip, sn);</span><br><span class="line">                            devices.add(device);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ignored) &#123;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                close();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"UDPSearcher listener finished."</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (ds != <span class="keyword">null</span>) &#123;</span><br><span class="line">                ds.close();</span><br><span class="line">                ds = <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">List&lt;Device&gt; <span class="title">getDevicesAndClose</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            done = <span class="keyword">true</span>;</span><br><span class="line">            close();</span><br><span class="line">            <span class="keyword">return</span> devices;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageCreator</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SN_HEADER = <span class="string">"收到暗号，我是（SN）"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String PORT_HEADER = <span class="string">"这是暗号，请回电端口（Port）:"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> String <span class="title">buildWithPort</span><span class="params">(<span class="keyword">int</span> port)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> PORT_HEADER + port;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parsePort</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (data.startsWith(PORT_HEADER)) &#123;</span><br><span class="line">            <span class="keyword">return</span> Integer.parseInt(data.substring(PORT_HEADER.length()));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> String <span class="title">buildWithSn</span><span class="params">(String sn)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> SN_HEADER + sn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> String <span class="title">parseSn</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (data.startsWith(SN_HEADER)) &#123;</span><br><span class="line">            <span class="keyword">return</span> data.substring(SN_HEADER.length());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/学习MySQL/" class="archive-article-date">
-  	<time datetime="2019-09-14T08:53:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/学习MySQL/">学习MySQL</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/10/Socket网络编程之UDP广播/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/常用排序算法/" class="archive-article-date">
-  	<time datetime="2019-09-14T06:56:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/12/20/Socket网络编程之TCP/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Socket网络编程之TCP
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/02/Socket网络编程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Socket网络编程之基础知识</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/常用排序算法/">常用排序算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-UDP"><span class="toc-number">1.</span> <span class="toc-text">What is UDP?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDP为什么不可靠？"><span class="toc-number">2.</span> <span class="toc-text">UDP为什么不可靠？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDP能做什么？"><span class="toc-number">3.</span> <span class="toc-text">UDP能做什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDP包一次最多能发送多少字节？"><span class="toc-number">4.</span> <span class="toc-text">UDP包一次最多能发送多少字节？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#发送广播Demo"><span class="toc-number">5.</span> <span class="toc-text">发送广播Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP-Searcher"><span class="toc-number">5.1.</span> <span class="toc-text">UDP Searcher</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP-Searcher-1"><span class="toc-number">5.2.</span> <span class="toc-text">UDP Searcher</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/spring-boot-starter/" class="archive-article-date">
-  	<time datetime="2019-09-14T04:00:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/spring-boot-starter/">spring-boot-starter</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/SpringBoot之四个核心/" class="archive-article-date">
-  	<time datetime="2019-09-14T03:46:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/SpringBoot之四个核心/">SpringBoot之四个核心</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/13/SpringBootAppliccation详解/" class="archive-article-date">
-  	<time datetime="2019-09-13T03:26:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/13/SpringBootAppliccation详解/">SpringBootApplication详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/13/Spring-IoC/" class="archive-article-date">
-  	<time datetime="2019-09-13T01:30:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/13/Spring-IoC/">Spring IoC</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/11/二叉树的前序中序后序和层序遍历的总结/" class="archive-article-date">
-  	<time datetime="2019-09-11T11:40:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/11/二叉树的前序中序后序和层序遍历的总结/">二叉树的前序中序后序和层序遍历的总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2019/">&laquo; Prev</a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -369,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
