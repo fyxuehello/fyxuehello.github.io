@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/12 | Hexo</title>
+  <title>简易聊天室案例 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/12/index.html">
+  <meta name="description" content="聊天室数据传输设计：必要条件：客户端(多客户端)、服务器 必要约束：数据传输协议(在A客户端发送的消息可以在其它客户端能够解析，此处采用简单的每行数据发送的方案即使用换行符作为数据传输的分割) 原理：服务器监听消息的来源、客户端连接服务器并发送消息到服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易聊天室案例">
+<meta property="og:url" content="http://yoursite.com/2020/01/10/简易聊天室案例/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="聊天室数据传输设计：必要条件：客户端(多客户端)、服务器 必要约束：数据传输协议(在A客户端发送的消息可以在其它客户端能够解析，此处采用简单的每行数据发送的方案即使用换行符作为数据传输的分割) 原理：服务器监听消息的来源、客户端连接服务器并发送消息到服务器">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/01/10/简易聊天室案例/Protocol.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/01/10/简易聊天室案例/ClientToClientModel.jpg">
+<meta property="og:updated_time" content="2020-04-03T04:09:31.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="简易聊天室案例">
+<meta name="twitter:description" content="聊天室数据传输设计：必要条件：客户端(多客户端)、服务器 必要约束：数据传输协议(在A客户端发送的消息可以在其它客户端能够解析，此处采用简单的每行数据发送的方案即使用换行符作为数据传输的分割) 原理：服务器监听消息的来源、客户端连接服务器并发送消息到服务器">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/10/简易聊天室案例/Protocol.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,130 +145,187 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-简易聊天室案例" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      简易聊天室案例
+    </h1>
+  
+
+        
+        <a href="/2020/01/10/简易聊天室案例/" class="archive-article-date">
+  	<time datetime="2020-01-10T02:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>聊天室数据传输设计：<br>必要条件：客户端(多客户端)、服务器</p>
+<p>必要约束：数据传输协议(在A客户端发送的消息可以在其它客户端能够解析，此处采用简单的每行数据发送的方案即使用换行符作为数据传输的分割)</p>
+<p>原理：服务器监听消息的来源、客户端连接服务器并发送消息到服务器</p>
+<a id="more"></a>
+
+<h2 id="数据传输协议"><a href="#数据传输协议" class="headerlink" title="数据传输协议"></a>数据传输协议</h2><p><img src="./Protocol.jpg" alt="数据传输协议"></p>
+<h2 id="客户端到客户端模型"><a href="#客户端到客户端模型" class="headerlink" title="客户端到客户端模型"></a>客户端到客户端模型</h2><p><img src="./ClientToClientModel.jpg" alt></p>
+<p>客户端发送到服务器，再由服务器转发给客户端</p>
+<h2 id="聊天室消息接收实现"><a href="#聊天室消息接收实现" class="headerlink" title="聊天室消息接收实现"></a>聊天室消息接收实现</h2><p>服务器端：ClientHandler.ClientReadHandler接收到客户端一条消息时，回调给服务器(ClientHandler.ClientHandlerCallback接口实现)；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClientHandlerCallback.onNewMessageArrived(ClientHandler.<span class="keyword">this</span>, line);</span><br></pre></td></tr></table></figure>
+
+<h2 id="聊天室消息转发实现"><a href="#聊天室消息转发实现" class="headerlink" title="聊天室消息转发实现"></a>聊天室消息转发实现</h2><p>TcpServer类实现ClientHandlerCallback接口；<br>那么TcpServe实现了ClientHandlerCallback.onNewMessageArrived()方法，在方法的内部通过一个线程池(有可能一个客户端接连发送了3条消息，为了不阻塞主干线程，所以需要使用异步操作，那么就使用线程池来完成这个异步操作)实现转发到其他客户端功能；注意，因为涉及到多线程环境，在遍历ClientHandler集合时容易出现并发问题，所以加入同步块。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">onNewMessageArrived</span><span class="params">(ClientHandler clientHandler, String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> String senderClient = clientHandler.getClientInfo();</span><br><span class="line">        System.out.println(<span class="string">"收到客户端："</span> + senderClient + <span class="string">" 信息： "</span> + message);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//转发到其他客户端</span></span><br><span class="line">        mForwardingThreadPoolExecutor.execute(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (TCPServer.<span class="keyword">this</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (ClientHandler handler : mClientHandlers) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (handler.getClientInfo().equals(senderClient)) &#123;</span><br><span class="line">                        <span class="comment">// 跳过自己</span></span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">//对其他客户端发送消息</span></span><br><span class="line">                    handler.send(message);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="服务器状态与测试用例"><a href="#服务器状态与测试用例" class="headerlink" title="服务器状态与测试用例"></a>服务器状态与测试用例</h2><h3 id="服务器状态-繁忙"><a href="#服务器状态-繁忙" class="headerlink" title="服务器状态-繁忙"></a>服务器状态-繁忙</h3><p>每个客户端都需要服务器进行双通等待(双通意味着每次要读取客户端发送来的信息，并且转发到其他客户端；对于每个客户端都涉及到读取和写入，读取是使用专门使用一个线程；写入使用的是一个线程池)<br>双通：客户端方数据到服务器的接收通道<br>双通：服务器回送消息的发送通道<br>每条通道因为阻塞只能使用异步线程实现</p>
+<h3 id="服务器线程数量"><a href="#服务器线程数量" class="headerlink" title="服务器线程数量"></a>服务器线程数量</h3><p>一个客户端：双通-&gt;2条线程<br>n个客户端：2n条线程<br>服务器实际线程数量：2n+<br>服务器自身的GC回收，服务器主线程，监听客户端来源，收到消息后转发消息的单线程池，所以这就四个线程了，服务器至少2n+4条线程</p>
+<h3 id="服务器性能分析："><a href="#服务器性能分析：" class="headerlink" title="服务器性能分析："></a>服务器性能分析：</h3><p>CPU：取决于数据的频繁性、数据转发的复杂性；<br>内存：取决于客户端的数量、客户端发送的数据大小<br>线程：取决于客户端的数量</p>
+<p>使用Java自带的Java VisualVM来进行检测，CPU消耗占用了50%左右；线程为2n+，启动了1000个客户端，服务器直接飙升了2015左右；1000个稳定传输下大概需要100M左右，那么一万个，十万个，内存的消耗是非常恐怖的。</p>
+<h3 id="服务器优化方案的分析："><a href="#服务器优化方案的分析：" class="headerlink" title="服务器优化方案的分析："></a>服务器优化方案的分析：</h3><p>减少线程数量<br>增加线程执行繁忙状态<br>客户端Buffer复用机制</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/28/UDP辅助TCP实现点对点传输案例/" class="archive-article-date">
-  	<time datetime="2019-12-28T14:53:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/28/UDP辅助TCP实现点对点传输案例/">UDP辅助TCP实现点对点传输案例</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/01/10/简易聊天室案例/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/20/Socket网络编程之TCP/" class="archive-article-date">
-  	<time datetime="2019-12-20T13:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/12/28/UDP辅助TCP实现点对点传输案例/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">UDP辅助TCP实现点对点传输案例</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/20/Socket网络编程之TCP/">Socket网络编程之TCP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据传输协议"><span class="toc-number">1.</span> <span class="toc-text">数据传输协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端到客户端模型"><span class="toc-number">2.</span> <span class="toc-text">客户端到客户端模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聊天室消息接收实现"><span class="toc-number">3.</span> <span class="toc-text">聊天室消息接收实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聊天室消息转发实现"><span class="toc-number">4.</span> <span class="toc-text">聊天室消息转发实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器状态与测试用例"><span class="toc-number">5.</span> <span class="toc-text">服务器状态与测试用例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器状态-繁忙"><span class="toc-number">5.1.</span> <span class="toc-text">服务器状态-繁忙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器线程数量"><span class="toc-number">5.2.</span> <span class="toc-text">服务器线程数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器性能分析："><span class="toc-number">5.3.</span> <span class="toc-text">服务器性能分析：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器优化方案的分析："><span class="toc-number">5.4.</span> <span class="toc-text">服务器优化方案的分析：</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
-  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/10/Socket网络编程之UDP广播/">Socket网络编程之UDP广播</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/Socket网络编程/" class="archive-article-date">
-  	<time datetime="2019-12-02T10:33:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/Socket网络编程/">Socket网络编程之基础知识</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -284,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
