@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>Socket网络编程之数据传输稳定性优化 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="· 消息粘包与消息不完整及解决方案· 借鉴学习HTTP2精髓· 数据传输Packet模型· 数据封包与拆包实操· 内存调度与内存复用模型· 消息优先级与三层数据调度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket网络编程之数据传输稳定性优化">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="· 消息粘包与消息不完整及解决方案· 借鉴学习HTTP2精髓· 数据传输Packet模型· 数据封包与拆包实操· 内存调度与内存复用模型· 消息优先级与三层数据调度">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/Message2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/Message1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/Message3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/Message4.jpg">
+<meta property="og:updated_time" content="2020-04-05T02:17:03.417Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Socket网络编程之数据传输稳定性优化">
+<meta name="twitter:description" content="· 消息粘包与消息不完整及解决方案· 借鉴学习HTTP2精髓· 数据传输Packet模型· 数据封包与拆包实操· 内存调度与内存复用模型· 消息优先级与三层数据调度">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/Message2.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,305 +147,227 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Socket网络编程之数据传输稳定性优化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/剑指Offer动态规划系列/" class="archive-article-date">
-  	<time datetime="2020-04-04T12:59:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/剑指Offer动态规划系列/">剑指Offer动态规划系列</a>
+    <h1 class="article-title" itemprop="name">
+      Socket网络编程之数据传输稳定性优化
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/" class="archive-article-date">
-  	<time datetime="2020-02-15T02:18:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/">Socket网络编程之局域网文件快传技术实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/04/Socket网络编程之数据传输稳定性优化/" class="archive-article-date">
+        
+        <a href="/2020/02/04/Socket网络编程之数据传输稳定性优化/" class="archive-article-date">
   	<time datetime="2020-02-04T03:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/04/Socket网络编程之数据传输稳定性优化/">Socket网络编程之数据传输稳定性优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/" class="archive-article-date">
-  	<time datetime="2020-01-20T07:57:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/">Socket网络编程之服务器传输优化-NIO</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/10/简易聊天室案例/" class="archive-article-date">
-  	<time datetime="2020-01-10T02:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/10/简易聊天室案例/">简易聊天室案例</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
+    <div class="article-entry" itemprop="articleBody">
       
-        </div></section>
+        <p>· 消息粘包与消息不完整及解决方案<br>· 借鉴学习HTTP2精髓<br>· 数据传输Packet模型<br>· 数据封包与拆包实操<br>· 内存调度与内存复用模型<br>· 消息优先级与三层数据调度</p>
+<a id="more"></a>
+
+<h1 id="消息粘包与消息不完整及解决方案"><a href="#消息粘包与消息不完整及解决方案" class="headerlink" title="消息粘包与消息不完整及解决方案"></a>消息粘包与消息不完整及解决方案</h1><h2 id="消息粘包"><a href="#消息粘包" class="headerlink" title="消息粘包"></a>消息粘包</h2><p>我们的程序实际上无权直接操作网卡的，我们操作网卡都是通过操作系统给用户程序暴露出来的接口，那每次我们的程序要给远程发数据时，其实是先把数据从用户态copy到内核态，这样的操作是耗资源和时间的，频繁的在内核态和用户态之前交换数据势必会导致发送效率降低， 因此socket为提高传输效率，发送方往往要收集到足够多的数据后才发送一次数据给对方。若连续几次需要send的数据都很少，通常TCP socket会根据优化算法把这些数据合成一个TCP段后一次发送出去，这样接收方就收到了粘包数据。</p>
+<h3 id="粘包的原因"><a href="#粘包的原因" class="headerlink" title="粘包的原因"></a>粘包的原因</h3><p>直接原因<br>　　所谓粘包问题主要还是因为接收方不知道消息之间的界限，不知道一次性提取多少字节的数据所造成的<br> 根本原因<br>　　发送方引起的粘包是由TCP协议本身造成的，TCP为提高传输效率，发送方往往要收集到足够多的数据后才发送一个TCP段。若连续几次需要send的数据都很少，通常TCP会根据优化算法把这些数据合成一个TCP段后一次发送出去，这样接收方就收到了粘包数据。</p>
+<p>TCP本质上并不会发生数据层层面的粘包，即在传输层并不会发生粘包，而是逻辑层面上的粘包，即发生在业务层；<br>TCP的发送方与接收方会确保数据以一种有序的方式到达客户端；</p>
+<p><img src="./Message2.jpg" alt></p>
+<h2 id="消息不完整"><a href="#消息不完整" class="headerlink" title="消息不完整"></a>消息不完整</h2><p>从输出层面来说TCP不会发生数据丢失不全等情况<br>消息不完整依然是针对数据逻辑接收层面</p>
+<p>所以，在传输层面来说数据一定是安全完整的送达另一端，但另一端可能因为缓冲区不够或者数据不完整导致数据只能读取一部分；</p>
+<p>例如，当客户端发送一段比较长的数据时，在发送过程中可能被TCP分割成一个个小包，一部分小包发送到服务器后，发送前面的一部分数据已经够组装成一个大包时，它会完成一个组装，并且把该大包push到业务上层，业务上层当收到消息到达时，也就是我们的SocketChannel读取数据到Buffer当中。但是我们并不知道这一段大的数据到底有多长，我们仅仅是读取到读不到数据时就进行后面的流程。有可能会出现我们只接收到大消息的一半，我们就做后面的逻辑处理了。这时候会导致逻辑处理端，也就是接收端就会把我们一条大的消息当成了两条子消息处理了。（非阻塞式IO存在的问题）<br>另一种情况是我们发送了一个大数据，此时大数据在网卡上已经完全接收到了，并且在系统缓冲区中已经缓存下来了。这个时候需要把数据读取到buffer中去，但是buffer仅仅只有100byte，而这个大数据有200byte情况下，buffer读取后就接着给下面逻辑层面处理了，也造成了消息不完整。</p>
+<p><img src="./Message1.jpg" alt></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>为了解决消息粘包、消息不完整，数据传输使用固定头部的方案，头部采取固定标识，并且描述了该消息体的长度。</p>
+<p>假如我们有一个字符串，它有100byte，那么在它的头部就加上4byte(一个int值)，那么真实发送的数据就是104个byte。在服务器端，首先会读取前面4个byte，根据这个int值大小来读取消息体，也就是从Channel中读取100个byte到buffer中。之后，我们知道这就是我们想要的数据，那么就可以把这个100个byte转换为String，用作下面的逻辑处理。如果我们Channel中只读取到了50byte，那么我们就继续等待，再读取50字节才表示读取完整。这样就解决了消息不完整。<br>同样消息粘包同样被避免了，因为下一个消息头部也是有一个int值，每次就只读取int值大小的数据，后面都不读取。</p>
+<p>在接收数据时，对数据进行分析和特征提取，首先读取数据头的int值，然后按照该int值的大小将后面body部分（数据体）读取到bytebuffer。</p>
+<p>在发送数据时，构建数据头，用于包的拆分和再组装，将数据头和待发送的数据作为sendpacket发送。（首先将待发送数据的长度信息写入，然后再把数据体写入到sendpacket）；</p>
+<h1 id="借鉴学习HTTP2精髓"><a href="#借鉴学习HTTP2精髓" class="headerlink" title="借鉴学习HTTP2精髓"></a>借鉴学习HTTP2精髓</h1><p>HTTP如何识别一个请求<br>HTTP如何读取请求头，请求头协议是怎样的<br>HTTP如何接受数据包体<br>当数据为文件时，HTTP如何判断文件已经接收到底了</p>
+<h1 id="数据传输Packet模型"><a href="#数据传输Packet模型" class="headerlink" title="数据传输Packet模型"></a>数据传输Packet模型</h1><h2 id="Clink包下新增了Packet概念，一个Packet就代表一个完整的消息"><a href="#Clink包下新增了Packet概念，一个Packet就代表一个完整的消息" class="headerlink" title="Clink包下新增了Packet概念，一个Packet就代表一个完整的消息"></a>Clink包下新增了Packet概念，一个Packet就代表一个完整的消息</h2><p>IoArgs是数据的载体，底层是封装ByteBuffer，但是ByteBuffer有一定的大小；那么对于大消息的话，直接使用发送/接收过来IoArgs的话，业务层可能会导致消息的不完整或者消息粘包等问题；<br>所以，在IoArgs之上再定义一个Packet，提供公共数据的封装(IoArgs的拆分和组装)，<em>这样一个Packet就对应一条完整的消息！</em></p>
+<blockquote>
+<p>clink.core.Packet：公共的数据封装（消息类型，消息长度），提供了类型以及数据长度的定义。</p>
+</blockquote>
+<blockquote>
+<p>clink.core.SendPacket：公发送包的定义</p>
+</blockquote>
+<blockquote>
+<p>clink.core.ReceivePacket：接收包的定义，不同的数据类型对应不同的 ReceivePack 实现。</p>
+</blockquote>
+<blockquote>
+<p>clink.box.StringReceivePacket：字符串接收包。</p>
+</blockquote>
+<blockquote>
+<p>clink.box.StringSendPacket：字符串发送包。</p>
+</blockquote>
+<h2 id="Connector：代表一个-Socket-连接，其主要工作如下："><a href="#Connector：代表一个-Socket-连接，其主要工作如下：" class="headerlink" title="Connector：代表一个 Socket 连接，其主要工作如下："></a>Connector：代表一个 Socket 连接，其主要工作如下：</h2><p>Connector 的创建需要一个 SocketChannel。<br>通过 SocketChannel 实例化 SocketChannelAdapter。SocketChannelAdapter 是 Sender 和 Receiver的实现者，具有发送和接收数据功能。<br>通过 Sender 创建发送调度则 SendDispatcher。<br>通过 Receiver 创建接收调度则 ReceiveDispatcher</p>
+<h2 id="数据的接受和发送流程："><a href="#数据的接受和发送流程：" class="headerlink" title="数据的接受和发送流程："></a>数据的接受和发送流程：</h2><p>IoProvider 负责具体的调度，内部有两个 Selector，分别用于选择可读和可写的 Channel。<br>Sender 和 Receiver 的实现者 SocketChannelAdapter 向 IoProvider 注册可读可写回调。<br>当可读或者可写时，IoProvider 通过回到回调通知到 SocketChannelAdapter，即 Sender 和 Receiver。</p>
+<h2 id="String-的接收和发送："><a href="#String-的接收和发送：" class="headerlink" title="String 的接收和发送："></a>String 的接收和发送：</h2><p>接收 String：接受到的是 StringReceivePacket，然后解析为 String。<br>发送 String：通过将 String 封装为 StringSendPacket 进行发送。</p>
+<h2 id="SendDispatcher，发送调度器-发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装-："><a href="#SendDispatcher，发送调度器-发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装-：" class="headerlink" title="SendDispatcher，发送调度器(发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装)："></a>SendDispatcher，发送调度器(发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装)：</h2><p>SendDispatcher 负责发送的调度，调用 Sender 的进行数据发送。<br>SendDispatcher 主要职责是：维护发送包的队列；对每个包进行拆分发送(拆分成IoArgs)。<br>SendDispatcher 的实现者是 AsyncSendDispatcher</p>
+<h2 id="ReceiveDispatcher，发送调度器-接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet-："><a href="#ReceiveDispatcher，发送调度器-接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet-：" class="headerlink" title="ReceiveDispatcher，发送调度器(接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet)："></a>ReceiveDispatcher，发送调度器(接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet)：</h2><p>ReceiveDispatcher 负责接收数据的调度，调用 Receiver 的进行数据接收。<br>ReceiveDispatcher 主要职责是：在接受数据的过程中，按照头部信息将数据组装成一个完整的包。<br>ReceiveDispatcher 的实现者是 AsyncReceiveDispatcher</p>
+<h2 id="IoArgs："><a href="#IoArgs：" class="headerlink" title="IoArgs："></a>IoArgs：</h2><p>发送和接收数据的载体，内部维护者一个 ByteBuffer。<br>从 Channel 读取数据到自身，将自身的数据写入到 Channel。</p>
+<h2 id="AsyncSendDispatcher的具体实现"><a href="#AsyncSendDispatcher的具体实现" class="headerlink" title="AsyncSendDispatcher的具体实现"></a>AsyncSendDispatcher的具体实现</h2><p>用一个队列缓存所有需要发送的数据(SendPacket)，在发送时首先判断是不是首包，如果是首包的话先将消息的长度总写入到IoArgs，然后再将消息体写入到IoArgs;如何定位首包呢，通过两个变量来维护当前包的大小和发送进度；当position==0时，意味着该包还未被发送，就是首包。</p>
+<h2 id="AsyncReceiveDispatcher-具体实现"><a href="#AsyncReceiveDispatcher-具体实现" class="headerlink" title="AsyncReceiveDispatcher 具体实现"></a>AsyncReceiveDispatcher 具体实现</h2><p>当接收数据时，首先接收一个int值，根据该int值来接收下面Packet；</p>
+<h1 id="混传数据总结与数理"><a href="#混传数据总结与数理" class="headerlink" title="混传数据总结与数理"></a>混传数据总结与数理</h1><h2 id="构建有序消息体"><a href="#构建有序消息体" class="headerlink" title="构建有序消息体"></a>构建有序消息体</h2><p>数据包分析与特征提取<br>数据头的构建<br>数据头、数据体接收</p>
+<p>发送：首先，基于类型和数据长度构建一个数据头，再将数据头和数据体一起封装起来进行发送；</p>
+<p>接收：首先接收数据头，解析数据头之后，再确定之后要接收多长的数据体；</p>
+<p>这样就可以保证数据头和数据体是一一对应的，避免了数据传输过程中的粘包和数据不完整的问题；</p>
+<p><img src="./Message3.jpg" alt></p>
+<p>发送调度的流程：<br>在发送调度者中有一个队列，我们会把需要发送的数据put到队列当中；当我们需要发送数据时，从队列中拿一个Packet出来，然后把它写入(Write)到IoArgs中去；当把数据写入IoArgs里面后，我们会把IoArgs注册(Register)到Sender，这时候会调用Sender异步发送数据的方法(sender.sendAsync(args,listener)),传入IoArgs并且会有一个listener的回调；当我们的sender经过Selector，也就是我们事件机制的回调之后，会判断这时候sender可以发送数据，并且把IoArgs里面的数据真实的进行发送；当把数据发送好了之后会进行一个回调，也就是回调listener的发送完成的方法(onCompleteted())，这就意味着当前的IoArgs已经发送成功了；这个listener是发送调度者持有的，如果此时Packet还没有发送完成，还会把Packet中的数据写入到IoArgs中，再次进行这个流程，直到当前的Packet被全部发送完成了。这个过程就涉及到数据包头，数据包体的概念，也就是会首先提取packet中的长度和数据的类型，然后会在第一个包(也就是首包)的最前面把数据长度和类型写入到IoArgs中，先把类型和长度通过sender进行发送，然后再发送packet中的真实内容，真实内容也是写入到IoArgs中，再通过sender进行发送；当数据包头和数据包体全部发送完成后，会从队列中拿下一个packet(sentNextPacket)，然后进行这样的一个流程。</p>
+<p><img src="./Message4.jpg" alt></p>
+<h2 id="AsyncSendDispatcher代码的具体实现"><a href="#AsyncSendDispatcher代码的具体实现" class="headerlink" title="AsyncSendDispatcher代码的具体实现"></a>AsyncSendDispatcher代码的具体实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前发送包的大小与进度</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> total;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">int</span> position;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> net.qiujuer.library.clink.impl.async;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.IoArgs;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.SendDispatcher;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.SendPacket;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.Sender;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.utils.CloseUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ConcurrentLinkedQueue;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicBoolean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncSendDispatcher</span> <span class="keyword">implements</span> <span class="title">SendDispatcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicBoolean isClosed=<span class="keyword">new</span> AtomicBoolean(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Sender sender;</span><br><span class="line">    <span class="comment">// 使用一个非阻塞、线程安全的队列，缓存所有需要发送的数据</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Queue&lt;SendPacket&gt; queue=<span class="keyword">new</span> ConcurrentLinkedQueue&lt;&gt;();</span><br><span class="line">    <span class="comment">// 发送状态的维持</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicBoolean isSending=<span class="keyword">new</span> AtomicBoolean();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> IoArgs ioArgs=<span class="keyword">new</span> IoArgs();</span><br><span class="line">    <span class="keyword">private</span> SendPacket packetTemp;</span><br><span class="line">    <span class="comment">//当前发送的大小与进度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> total;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> position;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AsyncSendDispatcher</span><span class="params">(Sender sender)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.sender = sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(SendPacket packet)</span> </span>&#123;</span><br><span class="line">        queue.offer(packet);</span><br><span class="line">        <span class="keyword">if</span>(isSending.compareAndSet(<span class="keyword">false</span>,<span class="keyword">true</span>))&#123;</span><br><span class="line">            <span class="comment">// 发送数据</span></span><br><span class="line">            sendNextPacket();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">(SendPacket packet)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isClosed.compareAndSet(<span class="keyword">false</span>,<span class="keyword">true</span>))&#123;</span><br><span class="line">            isSending.set(<span class="keyword">false</span>);</span><br><span class="line">            SendPacket packet=<span class="keyword">this</span>.packetTemp;</span><br><span class="line">            <span class="keyword">if</span>(packet!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                packetTemp=<span class="keyword">null</span>;</span><br><span class="line">                CloseUtils.close(packet);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> SendPacket <span class="title">takePacket</span><span class="params">()</span></span>&#123;</span><br><span class="line">        SendPacket packet=queue.poll();</span><br><span class="line">        <span class="keyword">if</span>(packet!=<span class="keyword">null</span> &amp;&amp; packet.isCancelled())&#123;</span><br><span class="line">            <span class="comment">//已取消，不用发送</span></span><br><span class="line">            <span class="keyword">return</span> takePacket();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> packet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendNextPacket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        SendPacket temp=packetTemp;</span><br><span class="line">        <span class="keyword">if</span>(temp!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            CloseUtils.close(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        SendPacket packet=packetTemp=takePacket();</span><br><span class="line">        <span class="keyword">if</span>(packet==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//队列为空，取消状态发送</span></span><br><span class="line">            isSending.set(<span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        total=packet.length();</span><br><span class="line">        position=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        sentCurrentPacket();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sentCurrentPacket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        IoArgs args=<span class="keyword">new</span> IoArgs();</span><br><span class="line">        <span class="comment">// 开始写入到IoArgs</span></span><br><span class="line">        args.startWriting();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(position&gt;=total)&#123;<span class="comment">// 已经完全把消息发送完毕了</span></span><br><span class="line">            sendNextPacket();</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(position==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">//首包，第一个需要携带长度的信息</span></span><br><span class="line">            args.writeLength(total);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=packetTemp.bytes();</span><br><span class="line">        <span class="comment">//把bytes数据写入到IoArgs</span></span><br><span class="line">        <span class="keyword">int</span> count=args.readFrom(bytes,position);</span><br><span class="line">        position+=count;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//完成封装</span></span><br><span class="line">        args.finishWriting();;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sender.sendAsync(args,ioArgsEventListener);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            closeAndNotify();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">closeAndNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        CloseUtils.close(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> IoArgs.IoArgsEventListener ioArgsEventListener=<span class="keyword">new</span> IoArgs.IoArgsEventListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStarted</span><span class="params">(IoArgs args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">(IoArgs args)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//继续发送当前包</span></span><br><span class="line">            sentCurrentPacket();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="AsyncReceiveDispatcher"><a href="#AsyncReceiveDispatcher" class="headerlink" title="AsyncReceiveDispatcher"></a>AsyncReceiveDispatcher</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> net.qiujuer.library.clink.impl.async;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.box.StringReceivePacket;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.IoArgs;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.ReceiveDispatcher;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.ReceivePacket;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.core.Receiver;</span><br><span class="line"><span class="keyword">import</span> net.qiujuer.library.clink.utils.CloseUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Closeable;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicBoolean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncReceiveDispatcher</span> <span class="keyword">implements</span> <span class="title">ReceiveDispatcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicBoolean isClosed=<span class="keyword">new</span> AtomicBoolean(<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Receiver receiver;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ReceivePacketCallback callback;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> IoArgs ioArgs=<span class="keyword">new</span> IoArgs();</span><br><span class="line">    <span class="comment">// 当前正在接收的packet</span></span><br><span class="line">    <span class="keyword">private</span> ReceivePacket packetTemp;</span><br><span class="line">    <span class="comment">// 首先接收到buffer当中，随后再将buffer中数据写入到packet</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] buffer;</span><br><span class="line">    <span class="comment">// 当前packet的大小以及进度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> total;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> position;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AsyncReceiveDispatcher</span><span class="params">(Receiver receiver, ReceivePacketCallback callback)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = receiver;</span><br><span class="line">        <span class="keyword">this</span>.receiver.setReceiveListener(ioArgsEventListener);</span><br><span class="line">        <span class="keyword">this</span>.callback = callback;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        registerReceive();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(isClosed.compareAndSet(<span class="keyword">false</span>,<span class="keyword">true</span>))&#123;</span><br><span class="line">            ReceivePacket packet=<span class="keyword">this</span>.packetTemp;</span><br><span class="line">            <span class="keyword">if</span>(packet!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                packetTemp=<span class="keyword">null</span>;</span><br><span class="line">                CloseUtils.close(packet);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerReceive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            receiver.receiverAsync(ioArgs);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            closeAndNotify();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">closeAndNotify</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        CloseUtils.close((Closeable) <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> IoArgs.IoArgsEventListener ioArgsEventListener=<span class="keyword">new</span> IoArgs.IoArgsEventListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStarted</span><span class="params">(IoArgs args)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span> receiveSize;</span><br><span class="line">            <span class="keyword">if</span>(packetTemp==<span class="keyword">null</span>)&#123;</span><br><span class="line">                receiveSize=<span class="number">4</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                receiveSize=Math.min(total-position,args.capacity());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//设置本次接受数据的大小</span></span><br><span class="line">            args.limit(receiveSize);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">(IoArgs args)</span> </span>&#123;</span><br><span class="line">            assemblePacket(args);</span><br><span class="line">            <span class="comment">//继续接受下一条数据</span></span><br><span class="line">            registerReceive();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析数据到Packet(IoArgs-&gt;ReceivePacket)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">assemblePacket</span><span class="params">(IoArgs args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(packetTemp==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> length=args.readLength();</span><br><span class="line">            packetTemp=<span class="keyword">new</span> StringReceivePacket(length);</span><br><span class="line">            buffer=<span class="keyword">new</span> <span class="keyword">byte</span>[length];</span><br><span class="line">            total=length;</span><br><span class="line">            position=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> count=args.writeTo(buffer,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(count&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            packetTemp.save(buffer,count);</span><br><span class="line">            position+=count;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(position==total)&#123;</span><br><span class="line">                completePacket();</span><br><span class="line">                packetTemp=<span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  完成数据接受操作</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">completePacket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ReceivePacket packet=<span class="keyword">this</span>.packetTemp;</span><br><span class="line">        CloseUtils.close(packet);</span><br><span class="line">        callback.OnReceivePacketCompleted(packet);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/28/UDP辅助TCP实现点对点传输案例/" class="archive-article-date">
-  	<time datetime="2019-12-28T14:53:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/28/UDP辅助TCP实现点对点传输案例/">UDP辅助TCP实现点对点传输案例</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/04/Socket网络编程之数据传输稳定性优化/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/20/Socket网络编程之TCP/" class="archive-article-date">
-  	<time datetime="2019-12-20T13:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Socket网络编程之局域网文件快传技术实战
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Socket网络编程之服务器传输优化-NIO</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/20/Socket网络编程之TCP/">Socket网络编程之TCP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#消息粘包与消息不完整及解决方案"><span class="toc-number">1.</span> <span class="toc-text">消息粘包与消息不完整及解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#消息粘包"><span class="toc-number">1.1.</span> <span class="toc-text">消息粘包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#粘包的原因"><span class="toc-number">1.1.1.</span> <span class="toc-text">粘包的原因</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息不完整"><span class="toc-number">1.2.</span> <span class="toc-text">消息不完整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">1.3.</span> <span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#借鉴学习HTTP2精髓"><span class="toc-number">2.</span> <span class="toc-text">借鉴学习HTTP2精髓</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据传输Packet模型"><span class="toc-number">3.</span> <span class="toc-text">数据传输Packet模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Clink包下新增了Packet概念，一个Packet就代表一个完整的消息"><span class="toc-number">3.1.</span> <span class="toc-text">Clink包下新增了Packet概念，一个Packet就代表一个完整的消息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connector：代表一个-Socket-连接，其主要工作如下："><span class="toc-number">3.2.</span> <span class="toc-text">Connector：代表一个 Socket 连接，其主要工作如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据的接受和发送流程："><span class="toc-number">3.3.</span> <span class="toc-text">数据的接受和发送流程：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#String-的接收和发送："><span class="toc-number">3.4.</span> <span class="toc-text">String 的接收和发送：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SendDispatcher，发送调度器-发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装-："><span class="toc-number">3.5.</span> <span class="toc-text">SendDispatcher，发送调度器(发送数据的调度者，缓存所有需要发送的数据，通过队列对数据进行发送，并且在发送数据时，实现对数据的基本包装)：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ReceiveDispatcher，发送调度器-接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet-："><span class="toc-number">3.6.</span> <span class="toc-text">ReceiveDispatcher，发送调度器(接收的数据调度封装，把一份或者多份IoArgs组合成一份Packet)：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IoArgs："><span class="toc-number">3.7.</span> <span class="toc-text">IoArgs：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsyncSendDispatcher的具体实现"><span class="toc-number">3.8.</span> <span class="toc-text">AsyncSendDispatcher的具体实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsyncReceiveDispatcher-具体实现"><span class="toc-number">3.9.</span> <span class="toc-text">AsyncReceiveDispatcher 具体实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#混传数据总结与数理"><span class="toc-number">4.</span> <span class="toc-text">混传数据总结与数理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#构建有序消息体"><span class="toc-number">4.1.</span> <span class="toc-text">构建有序消息体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsyncSendDispatcher代码的具体实现"><span class="toc-number">4.2.</span> <span class="toc-text">AsyncSendDispatcher代码的具体实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsyncReceiveDispatcher"><span class="toc-number">4.3.</span> <span class="toc-text">AsyncReceiveDispatcher</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
-  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/10/Socket网络编程之UDP广播/">Socket网络编程之UDP广播</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/Socket网络编程/" class="archive-article-date">
-  	<time datetime="2019-12-02T10:33:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/Socket网络编程/">Socket网络编程之基础知识</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
-  	<time datetime="2019-10-31T07:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/动态规划之双序列型问题/">动态规划之双序列型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -460,8 +391,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

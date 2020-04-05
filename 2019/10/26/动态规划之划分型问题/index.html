@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>动态规划之划分型问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="划分型动态规划常见动态规划类型给定长度为N的序列或字符串，要求划分成若干段段数不限，或指定K段每一段满足一定的性质做法类似于序列型动态规划，但是通常要加上段数信息般用f[i][j]记录前i个元素(元素0~i-1)分成j段的性质，如最小代价">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划之划分型问题">
+<meta property="og:url" content="http://yoursite.com/2019/10/26/动态规划之划分型问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="划分型动态规划常见动态规划类型给定长度为N的序列或字符串，要求划分成若干段段数不限，或指定K段每一段满足一定的性质做法类似于序列型动态规划，但是通常要加上段数信息般用f[i][j]记录前i个元素(元素0~i-1)分成j段的性质，如最小代价">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-04T12:56:39.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="动态规划之划分型问题">
+<meta name="twitter:description" content="划分型动态规划常见动态规划类型给定长度为N的序列或字符串，要求划分成若干段段数不限，或指定K段每一段满足一定的性质做法类似于序列型动态规划，但是通常要加上段数信息般用f[i][j]记录前i个元素(元素0~i-1)分成j段的性质，如最小代价">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,305 +142,182 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-动态规划之划分型问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      动态规划之划分型问题
+    </h1>
+  
+
+        
+        <a href="/2019/10/26/动态规划之划分型问题/" class="archive-article-date">
+  	<time datetime="2019-10-26T12:42:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-26</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>划分型动态规划<br>常见动态规划类型<br>给定长度为N的序列或字符串，要求划分成若干段<br>段数不限，或指定K段<br>每一段满足一定的性质做法<br>类似于序列型动态规划，但是通常要加上段数信息<br>般用f[i][j]记录前i个元素(元素0~i-1)分成j段的性质，如最小代价</p>
+<a id="more"></a>
+<h1 id="LintCode-513-Perfect-Squares"><a href="#LintCode-513-Perfect-Squares" class="headerlink" title="LintCode 513 Perfect Squares"></a>LintCode 513 Perfect Squares</h1><p>• 题意：<br>• 给定一个正整数n<br>• 问最少可以将n分成几个完全平方数(1,4,9,…)之和<br>• 例子：<br>• 输入：n=13<br>• 输出：2 （13=4+9）<br>动态规划组成部分一：确定状态<br>• 最后一步：关注最优策略中最后一个完全平方数j2<br>• 最优策略中n-j2也一定被划分成最少的完全平方数之和<br>• 需要知道n-j2最少被分成几个完全平方数之和<br>• 原来是求n最少被分成几个完全平方数之和<br>• 子问题<br>• 状态：设f[i]表示i最少被分成几个完全平方数之和<br>动态规划组成部分二：转移方程<br>• 设f[i]表示i最少被分成几个完全平方数之和<br>f[i] = min{f[i-j^2] + 1}|1&lt;=j<em>j&lt;=i<br>动态规划组成部分三：初始条件和边界情况<br>• 设f[i]表示i最少被分成几个完全平方数之和<br>• f[i] = min1&lt;=j</em>j&lt;=i{f[i-j2] + 1}<br>• 初始条件：0被分成0个完全平方数之和<br>– f[0] = 0<br>动态规划组成部分四：计算顺序<br>• 初始化f[0]<br>• 计算f[1], …, f[N]<br>• 答案是f[N]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//int[] nums=&#123;2,1,2,0,1,7&#125;;</span></span><br><span class="line">        <span class="comment">//System.out.println(bestTimetoBuyandSellStockII(nums));</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">perfectSquares</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            dp[i]=Integer.MAX_VALUE;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j*j&lt;=i;j++)&#123;</span><br><span class="line">                dp[i]=Math.min(dp[i],dp[i-j*j]+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">//时间复杂度O(n*n^(1/2))</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>• 划分性动态规划<br>• 要求将一个序列或字符串划分成若干满足要求的片段<br>• 解决方法：最后一步à最后一段<br>• 枚举最后一段的起点<br>• 如果题目不指定段数，用f[i]表示前i个元素分段后的可行性/最值，可行性，方式数： Perfect Squares, Palindrome Partition II<br>• 如果题目指定段数，用f[i][j]表示前i个元素分成j段后的可行性/最值，可行性，方式数：Copy Books</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/04/剑指Offer动态规划系列/" class="archive-article-date">
-  	<time datetime="2020-04-04T12:59:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/04/剑指Offer动态规划系列/">剑指Offer动态规划系列</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/" class="archive-article-date">
-  	<time datetime="2020-02-15T02:18:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/">Socket网络编程之局域网文件快传技术实战</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/02/04/Socket网络编程之数据传输稳定性优化/" class="archive-article-date">
-  	<time datetime="2020-02-04T03:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/02/04/Socket网络编程之数据传输稳定性优化/">Socket网络编程之数据传输稳定性优化</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/" class="archive-article-date">
-  	<time datetime="2020-01-20T07:57:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/">Socket网络编程之服务器传输优化-NIO</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/01/10/简易聊天室案例/" class="archive-article-date">
-  	<time datetime="2020-01-10T02:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/01/10/简易聊天室案例/">简易聊天室案例</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/28/UDP辅助TCP实现点对点传输案例/" class="archive-article-date">
-  	<time datetime="2019-12-28T14:53:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/28/UDP辅助TCP实现点对点传输案例/">UDP辅助TCP实现点对点传输案例</a>
-    </h1>
-  
+      </div>
+    </span>
+  </div>
+</div>
 
-        <div class="article-info info-on-right">
-          
-          
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/26/动态规划之划分型问题/" alt="微信分享二维码">
+    </div>
+</div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/20/Socket网络编程之TCP/" class="archive-article-date">
-  	<time datetime="2019-12-20T13:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/10/29/动态规划之背包问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          动态规划之背包问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/09/26/事务/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">事务</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/20/Socket网络编程之TCP/">Socket网络编程之TCP</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LintCode-513-Perfect-Squares"><span class="toc-number">1.</span> <span class="toc-text">LintCode 513 Perfect Squares</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小结"><span class="toc-number">2.</span> <span class="toc-text">小结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
-  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/10/Socket网络编程之UDP广播/">Socket网络编程之UDP广播</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/Socket网络编程/" class="archive-article-date">
-  	<time datetime="2019-12-02T10:33:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/Socket网络编程/">Socket网络编程之基础知识</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
-  	<time datetime="2019-10-31T07:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/动态规划之双序列型问题/">动态规划之双序列型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -460,8 +341,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
