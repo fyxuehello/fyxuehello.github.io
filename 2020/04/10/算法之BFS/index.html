@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>算法之BFS | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="宽度优先搜索(Breadth First Search)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法之BFS">
+<meta property="og:url" content="http://yoursite.com/2020/04/10/算法之BFS/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="宽度优先搜索(Breadth First Search)">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-10T11:43:06.635Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="算法之BFS">
+<meta name="twitter:description" content="宽度优先搜索(Breadth First Search)">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,295 +142,216 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-算法之BFS" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法之BFS
+    </h1>
+  
+
+        
+        <a href="/2020/04/10/算法之BFS/" class="archive-article-date">
+  	<time datetime="2020-04-10T05:36:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>宽度优先搜索(Breadth First Search)</p>
+<a id="more"></a>
+<h1 id="一、什么时候应该使用BFS？"><a href="#一、什么时候应该使用BFS？" class="headerlink" title="一、什么时候应该使用BFS？"></a>一、什么时候应该使用BFS？</h1><h2 id="图的遍历-Traversal-in-Graph"><a href="#图的遍历-Traversal-in-Graph" class="headerlink" title="图的遍历 Traversal in Graph"></a>图的遍历 Traversal in Graph</h2><p>• 层级遍历 Level Order Traversal<br>提要要求进行分层逻辑的问题</p>
+<p>• 由点及面 Connected Component<br>由一个点不断向外延伸，由点及面；</p>
+<p>• 拓扑排序 Topological Sorting</p>
+<h2 id="最短路径-Shortest-Path-in-Simple-Graph"><a href="#最短路径-Shortest-Path-in-Simple-Graph" class="headerlink" title="最短路径 Shortest Path in Simple Graph"></a>最短路径 Shortest Path in Simple Graph</h2><p>• 仅限简单图求最短路径<br>• 即，图中每条边长度都是1，且没有方向</p>
+<h2 id="宽搜要点-BFS-Key-Points"><a href="#宽搜要点-BFS-Key-Points" class="headerlink" title="宽搜要点 BFS Key Points"></a>宽搜要点 BFS Key Points</h2><p>使用队列作为主要的数据结构 Queue<br>思考：用栈（Stack）是否可行？为什么行 or 为什么不行？<br>用栈的话就非常别扭，操作复杂，stack在DFS使用；</p>
+<p>是否需要实现分层？<br>需要分层的算法比不需要分层的算法多一个循环<br>如果需要将每层的数据都分别存放的话，那么就需要分层。</p>
+<p>size=queue.size()<br>如果直接 for (int i = 0; i &lt; queue.size(); i++) 会怎么样？<br>for循环的话可以将所有二叉树的节点有插入到队列中去，包括空节点</p>
+<h2 id="BFS的模板"><a href="#BFS的模板" class="headerlink" title="BFS的模板"></a>BFS的模板</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一步创建一个队列Queue并将起始节点放到队列中去，有时题目有重复添加的情况，这时候需要再创建一个Set,用以去重</span></span><br><span class="line">Queue&lt;T&gt; queue=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">queue.add(firstNum);</span><br><span class="line"><span class="comment">//Set&lt;T&gt; hash=new HashSet&lt;&gt;();//和queue同步操作，即同时添加和弹出</span></span><br><span class="line"><span class="comment">//set.add(firstNum);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二步 while 队列不空</span></span><br><span class="line"><span class="keyword">while</span>(queue.isEmpty())&#123;</span><br><span class="line">	<span class="comment">// 如果需要将每层的数据单独存放在一起的话，那么需要在这里套一层for 循环</span></span><br><span class="line">	<span class="comment">//for()</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//第三步，满足条件进行添加到队列和hash中</span></span><br><span class="line">	<span class="keyword">if</span>(满足条件逻辑)&#123;</span><br><span class="line">		queue.add(下一层元素);</span><br><span class="line">		set.add(下一层元素);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二叉树上的宽度优先搜索"><a href="#二叉树上的宽度优先搜索" class="headerlink" title="二叉树上的宽度优先搜索"></a>二叉树上的宽度优先搜索</h1><p>Binary Tree Level Order Traversal</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition of TreeNode:</span></span><br><span class="line"><span class="comment">* public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">*     public int val;</span></span><br><span class="line"><span class="comment">*     public TreeNode left, right;</span></span><br><span class="line"><span class="comment">*     public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">*         this.val = val;</span></span><br><span class="line"><span class="comment">*         this.left = this.right = null;</span></span><br><span class="line"><span class="comment">*     &#125;</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> root: A Tree</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: Level order a list of lists of integer</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 1.创建一个队列，把起始节点都放到里面去(第一层节点)</span></span><br><span class="line">        Queue&lt;TreeNode&gt; queue=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="comment">// 2.while 队列不空，处理队列中的节点，并扩展新的节点</span></span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="comment">// for 上一层的节点拓展下一层的节点</span></span><br><span class="line">            <span class="keyword">int</span> levelSize=queue.size();</span><br><span class="line">            List&lt;Integer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;levelSize;i++)&#123;<span class="comment">// level x</span></span><br><span class="line">                TreeNode node=queue.poll();</span><br><span class="line">                list.add(node.val);</span><br><span class="line">                <span class="keyword">if</span>(node.left!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                    queue.offer(node.left);<span class="comment">// level x+1</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(node.right!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                    queue.offer(node.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// no deep copy，因为每次都new了一个ArrayList，每次new的结果都不一样，所以不需要deep copy；</span></span><br><span class="line">            <span class="comment">// 但是如果每次都是同一个ArrayList，那么需要deep copy:res.add(new ArrayList&lt;&gt;(list));</span></span><br><span class="line">            res.add(list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>二叉树相关的一类题目要求进行序列化操作；<br>将“内存”中结构化的数据变成“字符串”的过程<br>序列化：object to string<br>反序列化：string to object</p>
+<h3 id="什么时候需要序列化？"><a href="#什么时候需要序列化？" class="headerlink" title="什么时候需要序列化？"></a>什么时候需要序列化？</h3><ol>
+<li><p>将内存中的数据持久化存储时<br>内存中重要的数据不能只是呆在内存里，这样断电就没有了，所需需要用一种方式写入硬盘，在需要的时候，能否再从硬盘中读出来在内存中重新创建</p>
+</li>
+<li><p>网络传输时<br>机器与机器之间交换数据的时候，不可能互相去读对方的内存。只能讲数据变成字符流数据（字符串）后通过网络传输过去。接受的一方再将字符串解析后到内存中。常用的一些序列化手段：<br>• XML<br>• Json<br>• Thrift (by Facebook)<br>• ProtoBuf (by Google)</p>
+</li>
+</ol>
+<h3 id="一些序列化的例子："><a href="#一些序列化的例子：" class="headerlink" title="一些序列化的例子："></a>一些序列化的例子：</h3><p>• 比如一个数组，里面都是整数，我们可以简单的序列化为”[1,2,3]”<br>• 一个整数链表，我们可以序列化为，”1-&gt;2-&gt;3”<br>• 一个哈希表(HashMap)，我们可以序列化为，”{\”key\”: \”value\”}</p>
+<h3 id="二叉树如何序列化"><a href="#二叉树如何序列化" class="headerlink" title="二叉树如何序列化"></a>二叉树如何序列化</h3><p>这里采用的是 BFS 的方式对二叉树数据进行序列化，这样的好处是，你可以更为容易的自己画出整棵二叉树。<br>当然使用前序中序后序也都可以，只是层序遍历更直观的复现二叉树。</p>
+<p>Serialize and Deserialize Binary Tree:<br>Design an algorithm and write code to serialize and deserialize a binary tree. Writing the tree to a file is called ‘serialization’ and reading back from the file to reconstruct the exact same binary tree is ‘deserialization’.</p>
+<p>Example<br>Example 1:</p>
+<p>Input：{3,9,20,#,#,15,7}<br>Output：{3,9,20,#,#,15,7}<br>Explanation：<br>Binary tree {3,9,20,#,#,15,7},  denote the following structure:<br>      3<br>     / <br>    9  20<br>      /  <br>     15   7<br>it will be serialized {3,9,20,#,#,15,7}<br>Example 2:</p>
+<p>Input：{1,2,3}<br>Output：{1,2,3}<br>Explanation：<br>Binary tree {1,2,3},  denote the following structure:<br>   1<br>  / <br> 2   3<br>it will be serialized {1,2,3}<br>Our data serialization use BFS traversal. This is just for when you got Wrong Answer and want to debug the input.</p>
+<p>You can use other method to do serializaiton and deserialization.</p>
+<p>Notice<br>There is no limit of how you deserialize or serialize a binary tree, LintCode will take your output of serialize as the input of deserialize, it won’t check the result of serialize.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Definition of TreeNode:</span></span><br><span class="line"><span class="comment">* public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">*     public int val;</span></span><br><span class="line"><span class="comment">*     public TreeNode left, right;</span></span><br><span class="line"><span class="comment">*     public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">*         this.val = val;</span></span><br><span class="line"><span class="comment">*         this.left = this.right = null;</span></span><br><span class="line"><span class="comment">*     &#125;</span></span><br><span class="line"><span class="comment">* &#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * This method will be invoked first, you should design your own algorithm</span></span><br><span class="line"><span class="comment">     * to serialize a binary tree which denote by a root node to a string which</span></span><br><span class="line"><span class="comment">     * can be easily deserialized by your own "deserialize" method later.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">serialize</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"&#123;&#125;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        ArrayList&lt;TreeNode&gt; queue = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="comment">// 添加所有的节点</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; queue.size(); i++) &#123;</span><br><span class="line">            TreeNode node = queue.get(i);</span><br><span class="line">            <span class="keyword">if</span> (node == <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            queue.add(node.left);</span><br><span class="line">            queue.add(node.right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 维护队列，删除最后的空子节点</span></span><br><span class="line">        <span class="keyword">while</span> (queue.get(queue.size() - <span class="number">1</span>) == <span class="keyword">null</span>) &#123;</span><br><span class="line">            queue.remove(queue.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(<span class="string">"&#123;"</span>);</span><br><span class="line">        sb.append(queue.get(<span class="number">0</span>).val);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; queue.size(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (queue.get(i) == <span class="keyword">null</span>) &#123;</span><br><span class="line">                sb.append(<span class="string">",#"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                sb.append(<span class="string">","</span>);</span><br><span class="line">                sb.append(queue.get(i).val);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(<span class="string">"&#125;"</span>);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * This method will be invoked second, the argument data is what exactly</span></span><br><span class="line"><span class="comment">     * you serialized at method "serialize", that means the data is not given by</span></span><br><span class="line"><span class="comment">     * system, it's given by your own serialize method. So the format of data is</span></span><br><span class="line"><span class="comment">     * designed by yourself, and deserialize it here as you serialize it in</span></span><br><span class="line"><span class="comment">     * "serialize" method.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">deserialize</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (data.equals(<span class="string">"&#123;&#125;"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String[] vals = data.substring(<span class="number">1</span>, data.length() - <span class="number">1</span>).split(<span class="string">","</span>);</span><br><span class="line">        ArrayList&lt;TreeNode&gt; queue = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(Integer.parseInt(vals[<span class="number">0</span>]));</span><br><span class="line">        queue.add(root);</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">boolean</span> isLeftChild = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; vals.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!vals[i].equals(<span class="string">"#"</span>)) &#123;</span><br><span class="line">                TreeNode node = <span class="keyword">new</span> TreeNode(Integer.parseInt(vals[i]));</span><br><span class="line">                <span class="keyword">if</span> (isLeftChild) &#123;</span><br><span class="line">                    queue.get(index).left = node;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    queue.get(index).right = node;</span><br><span class="line">                &#125;</span><br><span class="line">                queue.add(node);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!isLeftChild) &#123;</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">            isLeftChild = !isLeftChild;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Given a binary tree, design an algorithm which creates a linked list of all the nodes at each depth (e.g., if you have a tree with depth D, you’ll have D linked lists).<br>Example<br>Example 1:</p>
+<p>Input: {1,2,3,4}<br>Output: [1-&gt;null,2-&gt;3-&gt;null,4-&gt;null]<br>Explanation:<br>        1<br>       / <br>      2   3<br>     /<br>    4<br>Example 2:</p>
+<p>Input: {1,#,2,3}<br>Output: [1-&gt;null,2-&gt;null,3-&gt;null]<br>Explanation:<br>    1<br>     <br>      2<br>     /<br>    3</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition of TreeNode:</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     public int val;</span></span><br><span class="line"><span class="comment"> *     public TreeNode left, right;</span></span><br><span class="line"><span class="comment"> *     public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = this.right = null;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> root the root of binary tree</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a lists of linked list</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;ListNode&gt; <span class="title">binaryTreeToLists</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Write your code here</span></span><br><span class="line">        List&lt;ListNode&gt; result = <span class="keyword">new</span> ArrayList&lt;ListNode&gt;();</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// first</span></span><br><span class="line">        Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        queue.offer(root);</span><br><span class="line">        <span class="comment">//second</span></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> size = queue.size();</span><br><span class="line">            ListNode dummy = <span class="keyword">new</span> ListNode(-<span class="number">1</span>);</span><br><span class="line">            ListNode prev = dummy;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">                TreeNode treeNode = queue.poll();</span><br><span class="line">                ListNode crtNode = <span class="keyword">new</span> ListNode(treeNode.val);</span><br><span class="line">                prev.next = crtNode;</span><br><span class="line">                prev = crtNode;</span><br><span class="line">                <span class="keyword">if</span> (treeNode.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    queue.offer(treeNode.left);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (treeNode.right != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    queue.offer(treeNode.right);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            result.add(dummy.next);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="图上的宽度优先搜索"><a href="#图上的宽度优先搜索" class="headerlink" title="图上的宽度优先搜索"></a>图上的宽度优先搜索</h1><p>树上父子关系，单向；<br>图上关系时邻居关系，双向；</p>
+<p>树的话有两个条件：<br>1，n个节点对应着n-1条边<br>2，n个节点都是相通的</p>
+<p>Example<br>Example 1:</p>
+<p>Input: n = 5 edges = [[0, 1], [0, 2], [0, 3], [1, 4]]<br>Output: true.<br>Example 2:</p>
+<p>Input: n = 5 edges = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]<br>Output: false.<br>Notice<br>You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.</p>
+<p>Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> n: An integer</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> edges: a list of undirected edges</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>: true if it's a valid tree, or false</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validTree</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// write your code here</span></span><br><span class="line">        <span class="comment">//树的两个条件，n个节点对应n-1条边，并且n个点是互通的</span></span><br><span class="line">        <span class="keyword">if</span>(edges==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(edges.length!=n-<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 根据n个点和n-1条边构造图</span></span><br><span class="line">        Map&lt;Integer,Set&lt;Integer&gt;&gt; map=getGraph(n,edges);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//bfs，判断n个点是否是相通,即能否从第一个点到达最后一个点</span></span><br><span class="line">        <span class="comment">//fisrt</span></span><br><span class="line">        Queue&lt;Integer&gt; queue=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        Set&lt;Integer&gt; hash=<span class="keyword">new</span> HashSet&lt;&gt;();<span class="comment">//去重</span></span><br><span class="line">        queue.add(<span class="number">0</span>);</span><br><span class="line">        hash.add(<span class="number">0</span>);</span><br><span class="line">        <span class="comment">//second</span></span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="keyword">int</span> node=queue.poll();</span><br><span class="line">            <span class="keyword">for</span>(Integer neighbor:map.get(node))&#123;</span><br><span class="line">                <span class="keyword">if</span>(hash.contains(neighbor))&#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                queue.add(neighbor);</span><br><span class="line">                hash.add(neighbor);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hash.size()==n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;Integer,Set&lt;Integer&gt;&gt; getGraph(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)&#123;</span><br><span class="line">        Map&lt;Integer,Set&lt;Integer&gt;&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">// 添加n个节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">            map.put(i,<span class="keyword">new</span> HashSet&lt;Integer&gt;());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 添加每个节点的邻居</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;edges.length;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> u=edges[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> v=edges[i][<span class="number">1</span>];</span><br><span class="line">            </span><br><span class="line">            map.get(u).add(v);</span><br><span class="line">            map.get(v).add(u);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="矩阵中的宽度优先搜索"><a href="#矩阵中的宽度优先搜索" class="headerlink" title="矩阵中的宽度优先搜索"></a>矩阵中的宽度优先搜索</h1><h2 id="矩阵-vs-图"><a href="#矩阵-vs-图" class="headerlink" title="矩阵 vs 图"></a>矩阵 vs 图</h2><p>图 Graph<br>N个点，M条边<br>M最大是 O(N^2) 的级别<br>图上BFS时间复杂度 = O(N + M)<br>• 说是O(M)问题也不大，因为M一般都比N大<br>所以最坏情况可能是 O(N^2)</p>
+<p>矩阵 Matrix<br>R行C列<br>R<em>C个点，R</em>C<em>2 条边（每个点上下左右4条边，每条边被2个点共享）。<br>矩阵中BFS时间复杂度 = O(R</em>C);</p>
+<h2 id="Number-of-Islands"><a href="#Number-of-Islands" class="headerlink" title="Number of Islands"></a>Number of Islands</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> grid a boolean 2D matrix</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> an integer</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numIslands</span><span class="params">(<span class="keyword">boolean</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (grid == <span class="keyword">null</span> || grid.length == <span class="number">0</span> || grid[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> n = grid.length;</span><br><span class="line">        <span class="keyword">int</span> m = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span> islands = <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; m; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (grid[i][j]) &#123;</span><br><span class="line">                    markByBFS(grid, i, j);</span><br><span class="line">                    islands++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> islands;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">markByBFS</span><span class="params">(<span class="keyword">boolean</span>[][] grid, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// magic numbers!</span></span><br><span class="line">        <span class="comment">// x=0,y=1,代表(x,y+1);x=1,y=0,代表(x+1,y);</span></span><br><span class="line">        <span class="keyword">int</span>[] directionX = &#123;<span class="number">0</span>, <span class="number">1</span>, -<span class="number">1</span>, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] directionY = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        </span><br><span class="line">        Queue&lt;Coordinate&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        </span><br><span class="line">        queue.offer(<span class="keyword">new</span> Coordinate(x, y));</span><br><span class="line">        grid[x][y] = <span class="keyword">false</span>;<span class="comment">//false表示将1Mark为0</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            Coordinate coor = queue.poll();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                Coordinate adj = <span class="keyword">new</span> Coordinate(</span><br><span class="line">                    coor.x + directionX[i],</span><br><span class="line">                    coor.y + directionY[i]</span><br><span class="line">                );</span><br><span class="line">                <span class="keyword">if</span> (!inBound(adj, grid)) &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (grid[adj.x][adj.y]) &#123;</span><br><span class="line">                    grid[adj.x][adj.y] = <span class="keyword">false</span>;</span><br><span class="line">                    queue.offer(adj);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 判断是否越界</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">inBound</span><span class="params">(Coordinate coor, <span class="keyword">boolean</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = grid.length;</span><br><span class="line">        <span class="keyword">int</span> m = grid[<span class="number">0</span>].length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> coor.x &gt;= <span class="number">0</span> &amp;&amp; coor.x &lt; n &amp;&amp; coor.y &gt;= <span class="number">0</span> &amp;&amp; coor.y &lt; m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结-Conclusion"><a href="#总结-Conclusion" class="headerlink" title="总结 Conclusion"></a>总结 Conclusion</h1><p>• 能用 BFS 的一定不要用 DFS（除非面试官特别要求）<br>• BFS 的两个使用条件<br>    图的遍历（由点及面，层级遍历）<br>    简单图最短路径<br>• 是否需要层级遍历<br>     size = queue.size()<br>• 坐标变换数组<br>•     dX={0, 1, -1, 0}, dY={1, 0, 0, -1}<br>• inBound</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/Socket网络编程/" class="archive-article-date">
-  	<time datetime="2019-12-02T10:33:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/Socket网络编程/">Socket网络编程之基础知识</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/10/算法之BFS/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
-  	<time datetime="2019-10-31T07:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/04/剑指Offer动态规划系列/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">剑指Offer动态规划系列</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/动态规划之双序列型问题/">动态规划之双序列型问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、什么时候应该使用BFS？"><span class="toc-number">1.</span> <span class="toc-text">一、什么时候应该使用BFS？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#图的遍历-Traversal-in-Graph"><span class="toc-number">1.1.</span> <span class="toc-text">图的遍历 Traversal in Graph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最短路径-Shortest-Path-in-Simple-Graph"><span class="toc-number">1.2.</span> <span class="toc-text">最短路径 Shortest Path in Simple Graph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#宽搜要点-BFS-Key-Points"><span class="toc-number">1.3.</span> <span class="toc-text">宽搜要点 BFS Key Points</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BFS的模板"><span class="toc-number">1.4.</span> <span class="toc-text">BFS的模板</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二叉树上的宽度优先搜索"><span class="toc-number">2.</span> <span class="toc-text">二叉树上的宽度优先搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#序列化"><span class="toc-number">2.1.</span> <span class="toc-text">序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么时候需要序列化？"><span class="toc-number">2.1.1.</span> <span class="toc-text">什么时候需要序列化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些序列化的例子："><span class="toc-number">2.1.2.</span> <span class="toc-text">一些序列化的例子：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二叉树如何序列化"><span class="toc-number">2.1.3.</span> <span class="toc-text">二叉树如何序列化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图上的宽度优先搜索"><span class="toc-number">3.</span> <span class="toc-text">图上的宽度优先搜索</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#矩阵中的宽度优先搜索"><span class="toc-number">4.</span> <span class="toc-text">矩阵中的宽度优先搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵-vs-图"><span class="toc-number">4.1.</span> <span class="toc-text">矩阵 vs 图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Number-of-Islands"><span class="toc-number">4.2.</span> <span class="toc-text">Number of Islands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结-Conclusion"><span class="toc-number">5.</span> <span class="toc-text">总结 Conclusion</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/30/动态规划之区间型问题/" class="archive-article-date">
-  	<time datetime="2019-10-30T01:47:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/30/动态规划之区间型问题/">动态规划之区间型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/动态规划之背包问题/" class="archive-article-date">
-  	<time datetime="2019-10-29T03:39:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/动态规划之背包问题/">动态规划之背包问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/26/动态规划之划分型问题/" class="archive-article-date">
-  	<time datetime="2019-10-26T12:42:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/26/动态规划之划分型问题/">动态规划之划分型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/26/事务/" class="archive-article-date">
-  	<time datetime="2019-09-26T13:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/26/事务/">事务</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/25/MySQL锁相关的问题/" class="archive-article-date">
-  	<time datetime="2019-09-25T11:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/25/MySQL锁相关的问题/">MySQL锁相关的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/23/MySQL索引与算法/" class="archive-article-date">
-  	<time datetime="2019-09-23T13:29:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/23/MySQL索引与算法/">MySQL索引与算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/22/MySQL技术内幕/" class="archive-article-date">
-  	<time datetime="2019-09-22T01:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/22/MySQL技术内幕/">MySQL技术内幕</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/14/学习MySQL/" class="archive-article-date">
-  	<time datetime="2019-09-14T08:53:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/14/学习MySQL/">学习MySQL</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -450,8 +375,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
