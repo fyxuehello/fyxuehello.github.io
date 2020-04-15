@@ -140,6 +140,78 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Java并发编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/10/Java并发编程/">Java并发编程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/10/Java并发编程/" class="archive-article-date">
+  	<time datetime="2020-04-10T12:26:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h1 id="Java-内存模型"><a href="#Java-内存模型" class="headerlink" title="Java 内存模型"></a>Java 内存模型</h1><h2 id="Java内存模型（Java-Memory-Model，简称JMM）"><a href="#Java内存模型（Java-Memory-Model，简称JMM）" class="headerlink" title="Java内存模型（Java Memory Model，简称JMM）"></a>Java内存模型（Java Memory Model，简称JMM）</h2><p>是Java虚拟机规范定义的，用来屏蔽掉java程序在各种不同的硬件和操作系统对内存的访问的差异，这样就可以实现java程序在各种不同的平台上都能达到内存访问的一致性。JMM本质上是一套抽象的模型，并非真实存在，我们可以通过下图来直观的了解其结构。<br><img src="./JMM.jpg" alt></p>
+<p>可以看到JMM主要分为三块，分别是：主内存、工作内存和线程。主内存被所有线程共享，而工作内存是线程私有的，不被其他线程可见。下面我们来理解主内存和工作内存。</p>
+<h2 id="2-主内存与工作内存"><a href="#2-主内存与工作内存" class="headerlink" title="2.主内存与工作内存"></a>2.主内存与工作内存</h2><p>首先需要强调的是，这里讲的主内存和工作内存与JVM内存区域中的Java堆，栈、方法区等并不是同一个层次的对内存的划分，这两者之间严格来讲几乎没什么关系。在这个基础上，我们接着去理解主内存和工作内存中到底存放着什么。<br><img src="./JMM2.jpg" alt></p>
+<p>从图中可以直观的了解到，线程之间的共享变量（包括实例字段、静态字段和构成数组对象的元素等）均存储在主内存中，而线程工作时所读/写读共享变量为工作内存中读共享变量副本。JMM规定了规定了线程对变量的所有操作（读取、赋值等）都必须在工作内存中进行，而不能直接读写主内存中的数据。不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递均需要通过主内存来完成。</p>
+<h2 id="3-内存之间的操作"><a href="#3-内存之间的操作" class="headerlink" title="3.内存之间的操作"></a>3.内存之间的操作</h2><p>那么问题来了，工作内存是如何从主内存拷贝数据，主内存又是如何更新数据的呢？JMM中定义了一下八种操作：</p>
+<p>Lock（锁定）： 作用于主内存变量，将变量标志为一条线程所独占<br>Unlock（解锁）： 作用于主内存变量，将处于锁定的变量释放出来<br>Read（读取）： 作用于主内存变量，它将一个变量的值从主内存传输到线程的工作内存中<br>Load（载入）： 作用于工作内存变量，它把从主内存读取的变量值放入工作内存的副本中<br>Use（使用）： 作用于工作内存变量，将工作内存变量值传递给执行引擎<br>Assgin（赋值）： 作用于工作内存变量，将执行引擎的值传递给工作内存的变量<br>Store（存储）： 作用于工作内存变量，它把工作内存变量传递到主内存中<br>Write（写入）： 作用于主内存变量，把Store操作从工作内存得到的变量值放入主内存变量中<br>Java虚拟机实现时必须保证上面提及等每一种操作都是原子的、不可再分的（对于double和long类型的变量来说，load、store、read和write在某些平台上可能会有例外）。<br>如果要把一个变量的值从主内存复制到工作内存，那么需要执行read load操作；如果要把一个变量的值从工作内存同步回主内存，那么需要执行store write操作。但是JMM只能保证2个操作必须顺序执行，但不保证连续执行，即在指令之间可以插入其它指令。</p>
+<p>除此之外，JMM还规定了在执行上述8种基本操作是必须满足如下规则：</p>
+<p>不允许read、load、store、write单独出现，即不允许一个变量读取到工作内存，但没有变量接收的情况<br>不允许一个线程丢弃它的assign操作，即变量在工作内存改变必须同步回主内存<br>不允许一个线程无原因（没有发生assgin赋值操作）把数据从线程的工作内存同步会主内存<br>一个新的变量只能在主内存中诞生，不允许在工作内存中直接使用未被初始化的变量<br>一个变量同一时刻只允许一条线程对其进行Lock锁定，但Lock操作可以被同一线程重复执行<br>如果对一个变量执行Lock锁定，会清空工作内存中该副本的值，即执行引擎使用该值会重新load assgin操作初始化该值<br>如果一个变量事先没有被Lock锁定，那就不允许进行Unlock操作，也不允许Unlock其它线程锁定的变量<br>对一个变量执行Unlock操作，必须先把此变量值同步回主内存（store、write操作）</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过对JMM的理解，对于为什么多线程会出现内存可见性，原子性以及重排序会有自己的想法。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/10/Java并发编程/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法之BFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -703,71 +775,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/12/20/Socket网络编程之TCP/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Socket网络编程之UDP广播" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/10/Socket网络编程之UDP广播/">Socket网络编程之UDP广播</a>
-    </h1>
-  
-
-        
-        <a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
-  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="What-is-UDP"><a href="#What-is-UDP" class="headerlink" title="What is UDP?"></a>What is UDP?</h1><p>User Datagram Protocol,缩写为UDP；<br>UDP是一种用户数据报协议，又称用户数据报文协议；<br>UDP是一个简单的面向数据包的传输层协议；<br>UDP是用户数据协议，非连接协议；</p>
-        
-          <a class="article-more-a" href="/2019/12/10/Socket网络编程之UDP广播/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/12/10/Socket网络编程之UDP广播/">展开全文 >></a>
         </p>
       
 
