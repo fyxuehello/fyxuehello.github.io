@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>数据结构与算法之二分查找 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、二分查找的原理二、二分查找的使用场景三、最基本的二分查找及其变形四、LeetCode上二分查找常见题目五、剑指offer上二分查找题目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法之二分查找">
+<meta property="og:url" content="http://yoursite.com/2020/04/19/数据结构与算法之二分查找/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、二分查找的原理二、二分查找的使用场景三、最基本的二分查找及其变形四、LeetCode上二分查找常见题目五、剑指offer上二分查找题目">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-22T01:14:17.788Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="数据结构与算法之二分查找">
+<meta name="twitter:description" content="一、二分查找的原理二、二分查找的使用场景三、最基本的二分查找及其变形四、LeetCode上二分查找常见题目五、剑指offer上二分查找题目">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,16 +142,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-数据结构与算法之二分查找" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-数据结构与算法之二分查找" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/19/数据结构与算法之二分查找/">数据结构与算法之二分查找</a>
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法之二分查找
     </h1>
   
 
@@ -161,11 +163,59 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>一、二分查找的原理<br>二、二分查找的使用场景<br>三、最基本的二分查找及其变形<br>四、LeetCode上二分查找常见题目<br>五、剑指offer上二分查找题目</p>
-        
-          <a class="article-more-a" href="/2020/04/19/数据结构与算法之二分查找/#more">more >></a>
-        
+<a id="more"></a>
+<h1 id="一、二分查找的原理"><a href="#一、二分查找的原理" class="headerlink" title="一、二分查找的原理"></a>一、二分查找的原理</h1><h2 id="1，时间复杂度"><a href="#1，时间复杂度" class="headerlink" title="1，时间复杂度"></a>1，时间复杂度</h2><p>二分查找的时间复杂度：T(n)=T(n/2)+O(1)=O(logn);<br>通过O(1)的比较，把规模为n的问题变为n/2；</p>
+<p>常见的时间复杂度：<br>O(1)极少<br>O(logn)几乎都是二分法<br>O(n^1/2)几乎是分解质因数<br>O(n)高频<br>O(nlogn)一般都可能要排序<br>O(n^2)数组，枚举，动态规划<br>O(n^3)数组，枚举，动态规划<br>O(2n) 与组合有关的搜索<br>O(n!) 与排列有关的搜索</p>
+<p><strong>比O(n)更优的时间复杂度几乎只能是O(logn)的二分法；</strong></p>
+<h2 id="2，二分法常见的痛点"><a href="#2，二分法常见的痛点" class="headerlink" title="2，二分法常见的痛点"></a>2，二分法常见的痛点</h2><p>死循环</p>
+<p>循环结束条件到底是哪个？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start&lt;=end;</span><br><span class="line">start&lt;end;</span><br><span class="line">start+<span class="number">1</span>&lt;end;</span><br></pre></td></tr></table></figure>
+
+<p>指针变化到底是哪个？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start=mid;</span><br><span class="line">start=mid+<span class="number">1</span>;</span><br><span class="line">start=mid-d;</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、二分查找的使用场景"><a href="#二、二分查找的使用场景" class="headerlink" title="二、二分查找的使用场景"></a>二、二分查找的使用场景</h1><p>1、二分查找的底层数据结构必须是数组。因为需要根据下标随机访问数组。</p>
+<p>2、二分查找针对的是有序数组。二分查找只能用在插入、删除操作不频繁，一次排序多次查找的场景中。针对动态变化的数据集合，二分查找将不再适用。</p>
+<p>3、对于频繁变化的动态数据，二分法不适合。因为每次查找前都需要重新排序，虽然查找的时间复杂度是 O(logn)，但排序的时间复杂度是 O(nlogn)，因而总的时间复杂度就变成 O(nlogn)。</p>
+<p>4、数据量太小不适合二分查找。数据量太小则不能体现二分查找法的优势，还不如直接顺序遍历。</p>
+<p>比如我们在一个大小为 10 的数组中查找一个元素，不管用二分查找还是顺序遍历，查找速度都差不多。只有数据量比较大的时候，二分查找的优势才会比较明显。当然，如果数据比较操作非常耗时，不管数据量大小，都推荐使用二分查找。如长度超过 300 的字符串比较。</p>
+<p>5、数据量太大也不适合二分查找。数据量太大内存不够，因为数组必须使用连续的内存进行存储。二分查找的底层需要依赖数组这种数据结构，而数组为了支持随机访问的特性，要求内存空间连续，对内存的要求比较苛刻。比如，我们有 1GB 大小的数据，如果希望用数组来存储，那就需要 1GB 的连续内存空间。</p>
+<h1 id="三、最基本的二分查找及其变形"><a href="#三、最基本的二分查找及其变形" class="headerlink" title="三、最基本的二分查找及其变形"></a>三、最基本的二分查找及其变形</h1><h2 id="1、最基本的二分查找："><a href="#1、最基本的二分查找：" class="headerlink" title="1、最基本的二分查找："></a>1、最基本的二分查找：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span></span>&#123;</span><br><span class="line">    <span class="comment">//有序数组中不存在重复的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">BinarySearch</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low=<span class="number">0</span>,high=arr.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(low&lt;=high)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=low+(high-low)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(arr[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[mid]&lt;target)&#123;</span><br><span class="line">                low=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                high=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、四种变形："><a href="#2、四种变形：" class="headerlink" title="2、四种变形："></a>2、四种变形：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span></span>&#123;</span><br><span class="line">    <span class="comment">//查找第一个值等于给定值的元素（有重复元素）</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">BinarySearch1</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> low=<span class="number">0</span>,high=arr.length-<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>(low&lt;=high)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=low+(high-low)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(arr[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==<span class="number">0</span> || arr[mid-<span class="number">1</span>]!=target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    high=mid-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[mid]&lt;target)&#123;</span><br><span class="line">                low=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                high=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//查找最后一个值等于给定值的元素（有重复值）</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">BinarySearch2</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low=<span class="number">0</span>,high=arr.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(low&lt;=high)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=low+(high-low)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(arr[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==arr.length-<span class="number">1</span> || arr[mid+<span class="number">1</span>]!=target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    low=mid+<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[mid]&lt;target)&#123;</span><br><span class="line">                low=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                high=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找第一个大于等于给定值的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">BinarySearch3</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low=<span class="number">0</span>,high=arr.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(low&lt;=high)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=low+(high-low)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(arr[mid]&lt;target)&#123;</span><br><span class="line">                low=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==<span class="number">0</span> || arr[mid-<span class="number">1</span>]&lt;target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    high=mid-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找第一个小于等于给定值的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">BinarySearch4</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low=<span class="number">0</span>,high=arr.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(low&lt;=high)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=low+(high-low)/<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(arr[mid]&gt;target)&#123;</span><br><span class="line">                high=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==arr.length-<span class="number">1</span> || arr[mid+<span class="number">1</span>]&gt;target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    low=mid+<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、LeetCode上二分查找常见题目"><a href="#四、LeetCode上二分查找常见题目" class="headerlink" title="四、LeetCode上二分查找常见题目"></a>四、LeetCode上二分查找常见题目</h1><h2 id="1、Search-in-Rotated-Sorted-Array"><a href="#1、Search-in-Rotated-Sorted-Array" class="headerlink" title="1、Search in Rotated Sorted Array"></a>1、Search in Rotated Sorted Array</h2><p>在本题中不存在重复元素，那么在查找旋转位置时不需要考虑重复的情形。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// first：find the rotated index</span></span><br><span class="line">        <span class="comment">// second： binary search the target</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> rotatedIndex=findRotatedIndex(nums);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> left=target&gt;nums[nums.length-<span class="number">1</span>] ? <span class="number">0</span>:rotatedIndex;</span><br><span class="line">        <span class="keyword">int</span> right=target&gt;nums[nums.length-<span class="number">1</span>] ? rotatedIndex-<span class="number">1</span>:nums.length-<span class="number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">               right=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">findRotatedIndex</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&gt;nums[right])&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&lt;nums[right]) &#123;</span><br><span class="line">                right=mid;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> mid;<span class="comment">//如果有重复元素： right=mid-1;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、Find-First-and-Last-Position-of-Element-in-Sorted-Array"><a href="#2、Find-First-and-Last-Position-of-Element-in-Sorted-Array" class="headerlink" title="2、Find First and Last Position of Element in Sorted Array"></a>2、Find First and Last Position of Element in Sorted Array</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] searchRange(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;-<span class="number">1</span>,-<span class="number">1</span>&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> first=findFirstPosition(nums,target);</span><br><span class="line">        <span class="keyword">int</span> last=findLastPosition(nums,target);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(first==-<span class="number">1</span> &amp;&amp; last==-<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;-<span class="number">1</span>,-<span class="number">1</span>&#125;;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;first,last&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">findFirstPosition</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">                right=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==<span class="number">0</span> || nums[mid-<span class="number">1</span>]!=target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    right=mid-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">findLastPosition</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> right=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">                right=mid-<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(mid==nums.length-<span class="number">1</span> || nums[mid+<span class="number">1</span>]!=target)&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    left=mid+<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、Find-the-Duplicate-Number"><a href="#3、Find-the-Duplicate-Number" class="headerlink" title="3、Find the Duplicate Number"></a>3、Find the Duplicate Number</h2><p>法一、类比链表有环，快慢指针法；<br>法二、二分法，At first the search space is numbers between 1 to n. Each time I select a number mid (which is the one in the middle) and count all the numbers equal to or less than mid. Then if the count is more than mid, the search space will be [1 mid] otherwise [mid+1 n]. I do this until search space is only one number.(From LeetCode’s mehran);<br>不太懂，所以二分法没写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length&lt;<span class="number">2</span>)</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> slow=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> fast=nums[nums[<span class="number">0</span>]];</span><br><span class="line">        <span class="keyword">while</span>(slow!=fast)&#123;</span><br><span class="line">            slow=nums[slow];</span><br><span class="line">            fast=nums[nums[fast]];</span><br><span class="line">        &#125;</span><br><span class="line">        fast=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(slow!=fast)&#123;</span><br><span class="line">            slow=nums[slow];</span><br><span class="line">            fast=nums[fast];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> slow;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、剑指offer上二分查找题目"><a href="#五、剑指offer上二分查找题目" class="headerlink" title="五、剑指offer上二分查找题目"></a>五、剑指offer上二分查找题目</h1>
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -174,16 +224,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/19/数据结构与算法之二分查找/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/19/数据结构与算法之二分查找/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/16/数据结构与算法之数组/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据结构与算法之数组</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -198,607 +307,32 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-数据结构与算法之数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/16/数据结构与算法之数组/">数据结构与算法之数组</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/16/数据结构与算法之数组/" class="archive-article-date">
-  	<time datetime="2020-04-16T02:58:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1>
-        
-          <a class="article-more-a" href="/2020/04/16/数据结构与算法之数组/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/16/数据结构与算法之数组/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、二分查找的原理"><span class="toc-number">1.</span> <span class="toc-text">一、二分查找的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1，时间复杂度"><span class="toc-number">1.1.</span> <span class="toc-text">1，时间复杂度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2，二分法常见的痛点"><span class="toc-number">1.2.</span> <span class="toc-text">2，二分法常见的痛点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、二分查找的使用场景"><span class="toc-number">2.</span> <span class="toc-text">二、二分查找的使用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、最基本的二分查找及其变形"><span class="toc-number">3.</span> <span class="toc-text">三、最基本的二分查找及其变形</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、最基本的二分查找："><span class="toc-number">3.1.</span> <span class="toc-text">1、最基本的二分查找：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、四种变形："><span class="toc-number">3.2.</span> <span class="toc-text">2、四种变形：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、LeetCode上二分查找常见题目"><span class="toc-number">4.</span> <span class="toc-text">四、LeetCode上二分查找常见题目</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、Search-in-Rotated-Sorted-Array"><span class="toc-number">4.1.</span> <span class="toc-text">1、Search in Rotated Sorted Array</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、Find-First-and-Last-Position-of-Element-in-Sorted-Array"><span class="toc-number">4.2.</span> <span class="toc-text">2、Find First and Last Position of Element in Sorted Array</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Find-the-Duplicate-Number"><span class="toc-number">4.3.</span> <span class="toc-text">3、Find the Duplicate Number</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、剑指offer上二分查找题目"><span class="toc-number">5.</span> <span class="toc-text">五、剑指offer上二分查找题目</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-数据结构与算法之链表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/14/数据结构与算法之链表/">数据结构与算法之链表</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/14/数据结构与算法之链表/" class="archive-article-date">
-  	<time datetime="2020-04-14T07:12:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="链表类的题目常用的方法："><a href="#链表类的题目常用的方法：" class="headerlink" title="链表类的题目常用的方法："></a>链表类的题目常用的方法：</h1><p>1，对于结构发生改变的链表，一般要使用dummy node；<br>2，对于中点、链表有环等问题，一般要使用快慢指针；<br>3，对于复制链表等问题，可以采用HashMap，key用来存oldnode，value用来存newnode，形成一种映射关系。</p>
-        
-          <a class="article-more-a" href="/2020/04/14/数据结构与算法之链表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/14/数据结构与算法之链表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java并发编程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/10/Java并发编程/">Java并发编程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/10/Java并发编程/" class="archive-article-date">
-  	<time datetime="2020-04-10T12:26:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Java内存模型</p>
-        
-          <a class="article-more-a" href="/2020/04/10/Java并发编程/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/10/Java并发编程/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法之BFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/10/算法之BFS/">算法之BFS</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/10/算法之BFS/" class="archive-article-date">
-  	<time datetime="2020-04-10T05:36:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>宽度优先搜索(Breadth First Search)</p>
-        
-          <a class="article-more-a" href="/2020/04/10/算法之BFS/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/10/算法之BFS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-剑指Offer动态规划系列" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/04/剑指Offer动态规划系列/">剑指Offer动态规划系列</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/04/剑指Offer动态规划系列/" class="archive-article-date">
-  	<time datetime="2020-04-04T12:59:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>剪绳子</p>
-        
-          <a class="article-more-a" href="/2020/04/04/剑指Offer动态规划系列/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/04/剑指Offer动态规划系列/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Socket网络编程之聊天室升级版实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/20/Socket网络编程之聊天室升级版实战/">Socket网络编程之聊天室升级版实战</a>
-    </h1>
-  
-
-        
-        <a href="/2020/02/20/Socket网络编程之聊天室升级版实战/" class="archive-article-date">
-  	<time datetime="2020-02-20T11:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>传输框架并发BUG修复</p>
-<p>三层缓存区优化</p>
-<p>运行状态格式化输出</p>
-<p>聊天室消息调度优化(CPU、内存、速度)</p>
-<p>心跳包发送与消费</p>
-<p>测试与收尾</p>
-        
-          <a class="article-more-a" href="/2020/02/20/Socket网络编程之聊天室升级版实战/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/20/Socket网络编程之聊天室升级版实战/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Socket网络编程之局域网文件快传技术实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/">Socket网络编程之局域网文件快传技术实战</a>
-    </h1>
-  
-
-        
-        <a href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/" class="archive-article-date">
-  	<time datetime="2020-02-15T02:18:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>文件传输与普通传输区别<br>消息模型基于通道传输优化<br>优雅的中断文件传输<br>高效的文件、普通消息混传<br>消息分片理论与技术实现<br>基于分片技术的命令模式</p>
-        
-          <a class="article-more-a" href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/15/Socket网络编程之局域网文件快传技术实战/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Socket网络编程之数据传输稳定性优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/02/04/Socket网络编程之数据传输稳定性优化/">Socket网络编程之数据传输稳定性优化</a>
-    </h1>
-  
-
-        
-        <a href="/2020/02/04/Socket网络编程之数据传输稳定性优化/" class="archive-article-date">
-  	<time datetime="2020-02-04T03:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>· 消息粘包与消息不完整及解决方案<br>· 借鉴学习HTTP2精髓<br>· 数据传输Packet模型<br>· 数据封包与拆包实操<br>· 内存调度与内存复用模型<br>· 消息优先级与三层数据调度</p>
-        
-          <a class="article-more-a" href="/2020/02/04/Socket网络编程之数据传输稳定性优化/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/02/04/Socket网络编程之数据传输稳定性优化/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Socket网络编程之服务器传输优化-NIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/">Socket网络编程之服务器传输优化-NIO</a>
-    </h1>
-  
-
-        
-        <a href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/" class="archive-article-date">
-  	<time datetime="2020-01-20T07:57:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>· 阻塞IO与非阻塞IO对比<br>· NIO API深入学习<br>· NIO重写数据调度<br>· NIO服务器Thread优化</p>
-        
-          <a class="article-more-a" href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/01/20/Socket网络编程之服务器传输优化-NIO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -821,8 +355,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

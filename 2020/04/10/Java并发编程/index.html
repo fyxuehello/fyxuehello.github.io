@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Java并发编程 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java 内存模型Java内存模型（Java Memory Model，简称JMM）是Java虚拟机规范定义的，用来屏蔽掉java程序在各种不同的硬件和操作系统对内存的访问的差异，这样就可以实现java程序在各种不同的平台上都能达到内存访问的一致性。JMM本质上是一套抽象的模型，并非真实存在，我们可以通过下图来直观的了解其结构。 可以看到JMM主要分为三块，分别是：主内存、工作内存和线程。主内存">
+  <meta name="description" content="Java内存模型">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发编程">
 <meta property="og:url" content="http://yoursite.com/2020/04/10/Java并发编程/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Java 内存模型Java内存模型（Java Memory Model，简称JMM）是Java虚拟机规范定义的，用来屏蔽掉java程序在各种不同的硬件和操作系统对内存的访问的差异，这样就可以实现java程序在各种不同的平台上都能达到内存访问的一致性。JMM本质上是一套抽象的模型，并非真实存在，我们可以通过下图来直观的了解其结构。 可以看到JMM主要分为三块，分别是：主内存、工作内存和线程。主内存">
+<meta property="og:description" content="Java内存模型">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2020/04/10/Java并发编程/JMM.jpg">
 <meta property="og:image" content="http://yoursite.com/2020/04/10/Java并发编程/JMM2.jpg">
-<meta property="og:updated_time" content="2020-04-14T07:12:46.406Z">
+<meta property="og:updated_time" content="2020-04-16T02:54:13.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程">
-<meta name="twitter:description" content="Java 内存模型Java内存模型（Java Memory Model，简称JMM）是Java虚拟机规范定义的，用来屏蔽掉java程序在各种不同的硬件和操作系统对内存的访问的差异，这样就可以实现java程序在各种不同的平台上都能达到内存访问的一致性。JMM本质上是一套抽象的模型，并非真实存在，我们可以通过下图来直观的了解其结构。 可以看到JMM主要分为三块，分别是：主内存、工作内存和线程。主内存">
+<meta name="twitter:description" content="Java内存模型">
 <meta name="twitter:image" content="http://yoursite.com/2020/04/10/Java并发编程/JMM.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -165,7 +165,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>Java内存模型</p>
+<a id="more"></a>
 <h1 id="Java-内存模型"><a href="#Java-内存模型" class="headerlink" title="Java 内存模型"></a>Java 内存模型</h1><h2 id="Java内存模型（Java-Memory-Model，简称JMM）"><a href="#Java内存模型（Java-Memory-Model，简称JMM）" class="headerlink" title="Java内存模型（Java Memory Model，简称JMM）"></a>Java内存模型（Java Memory Model，简称JMM）</h2><p>是Java虚拟机规范定义的，用来屏蔽掉java程序在各种不同的硬件和操作系统对内存的访问的差异，这样就可以实现java程序在各种不同的平台上都能达到内存访问的一致性。JMM本质上是一套抽象的模型，并非真实存在，我们可以通过下图来直观的了解其结构。<br><img src="./JMM.jpg" alt></p>
 <p>可以看到JMM主要分为三块，分别是：主内存、工作内存和线程。主内存被所有线程共享，而工作内存是线程私有的，不被其他线程可见。下面我们来理解主内存和工作内存。</p>
 <h2 id="2-主内存与工作内存"><a href="#2-主内存与工作内存" class="headerlink" title="2.主内存与工作内存"></a>2.主内存与工作内存</h2><p>首先需要强调的是，这里讲的主内存和工作内存与JVM内存区域中的Java堆，栈、方法区等并不是同一个层次的对内存的划分，这两者之间严格来讲几乎没什么关系。在这个基础上，我们接着去理解主内存和工作内存中到底存放着什么。<br><img src="./JMM2.jpg" alt></p>
@@ -267,6 +268,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/04/14/数据结构与算法之链表/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数据结构与算法之链表
+        
+      </div>
+    </a>
   
   
     <a href="/2020/04/10/算法之BFS/" id="article-nav-older" class="article-nav-link-wrap">
