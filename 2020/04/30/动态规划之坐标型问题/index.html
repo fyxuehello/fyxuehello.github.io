@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Hexo</title>
+  <title>动态规划之坐标型问题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/page/3/index.html">
+  <meta name="description" content="动态规划解题步骤：确定状态    研究最优策略下的最后一步    转化为子问题转移方程    根据子问题定义得到初始条件和边界情况    考虑全面、细致计算顺序    利用之前的计算结果 坐标型动态规划：题目：给定一个序列或者网格需要找出序列中某个/某些子序列或者网格中的某条路径    –某种性质最大/最小    –计数    –存在性动态规划方程dp[i]表示以a[i]结尾的满足条件的子序列的性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划之坐标型问题">
+<meta property="og:url" content="http://yoursite.com/2020/04/30/动态规划之坐标型问题/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="动态规划解题步骤：确定状态    研究最优策略下的最后一步    转化为子问题转移方程    根据子问题定义得到初始条件和边界情况    考虑全面、细致计算顺序    利用之前的计算结果 坐标型动态规划：题目：给定一个序列或者网格需要找出序列中某个/某些子序列或者网格中的某条路径    –某种性质最大/最小    –计数    –存在性动态规划方程dp[i]表示以a[i]结尾的满足条件的子序列的性">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-02T13:03:27.959Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="动态规划之坐标型问题">
+<meta name="twitter:description" content="动态规划解题步骤：确定状态    研究最优策略下的最后一步    转化为子问题转移方程    根据子问题定义得到初始条件和边界情况    考虑全面、细致计算顺序    利用之前的计算结果 坐标型动态规划：题目：给定一个序列或者网格需要找出序列中某个/某些子序列或者网格中的某条路径    –某种性质最大/最小    –计数    –存在性动态规划方程dp[i]表示以a[i]结尾的满足条件的子序列的性">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -138,295 +142,252 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-动态规划之坐标型问题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      动态规划之坐标型问题
+    </h1>
+  
+
+        
+        <a href="/2020/04/30/动态规划之坐标型问题/" class="archive-article-date">
+  	<time datetime="2020-04-30T13:29:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-30</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="动态规划解题步骤："><a href="#动态规划解题步骤：" class="headerlink" title="动态规划解题步骤："></a>动态规划解题步骤：</h1><p>确定状态<br>    研究最优策略下的最后一步<br>    转化为子问题<br>转移方程<br>    根据子问题定义得到<br>初始条件和边界情况<br>    考虑全面、细致<br>计算顺序<br>    利用之前的计算结果</p>
+<h1 id="坐标型动态规划："><a href="#坐标型动态规划：" class="headerlink" title="坐标型动态规划："></a>坐标型动态规划：</h1><p>题目：给定一个序列或者网格<br>需要找出序列中某个/某些子序列或者网格中的某条路径<br>    –某种性质最大/最小<br>    –计数<br>    –存在性<br>动态规划方程dp[i]表示以a[i]结尾的满足条件的子序列的性质，dp[i][j]表示下标i,j结尾的满足条件路径的性质<br>    –某种性质最大/最小<br>    –计数<br>    –存在性</p>
+<p>坐标型动态规划的初始条件dp[0]就是指以a[0]结尾的子序列的性质。</p>
+<a id="more"></a>
+
+<h1 id="1、Maximum-Subarray"><a href="#1、Maximum-Subarray" class="headerlink" title="1、Maximum Subarray"></a>1、Maximum Subarray</h1><p>Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.</p>
+<p>Example:</p>
+<p>Input: [-2,1,-3,4,-1,2,1,-5,4],<br>Output: 6<br>Explanation: [4,-1,2,1] has the largest sum = 6.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//dp[i]表示以nums[i]结尾的子序列最大值</span></span><br><span class="line">        <span class="keyword">int</span> m=nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m];</span><br><span class="line">        dp[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> max=Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            dp[i]=dp[i-<span class="number">1</span>]&gt;<span class="number">0</span>?dp[i-<span class="number">1</span>]+nums[i]:nums[i];</span><br><span class="line">            </span><br><span class="line">            max=Math.max(max,dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用两个变量解题，空间复杂度降至O(1)。</p>
+<h2 id="2、Unique-Paths"><a href="#2、Unique-Paths" class="headerlink" title="2、Unique Paths"></a>2、Unique Paths</h2><p>A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below).</p>
+<p>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).</p>
+<p>How many possible unique paths are there?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span> &amp;&amp; n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j]=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i][j]=dp[i-<span class="number">1</span>][j]+dp[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 空间复杂度降为O(m)</span></span><br><span class="line"><span class="comment">// 因为每次更新值只需要当前行和上一行的数据，故只需要开两行数据</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePaths</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span> &amp;&amp; n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>][n];</span><br><span class="line">        <span class="comment">// 两个指针，now指向当前行数据，old指向前一行数据，每次交换更新</span></span><br><span class="line">        <span class="keyword">int</span> old=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> now=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            old=now;</span><br><span class="line">            now=<span class="number">1</span>-old;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span> || j==<span class="number">0</span>)&#123;</span><br><span class="line">                    dp[now][j]=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[now][j]=dp[old][j]+dp[now][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[now][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、Unique-Paths-II"><a href="#3、Unique-Paths-II" class="headerlink" title="3、Unique Paths II"></a>3、Unique Paths II</h2><p>A robot is located at the top-left corner of a m x n grid (marked ‘Start’ in the diagram below).</p>
+<p>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).</p>
+<p>Now consider if some obstacles are added to the grids. How many unique paths would there be?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="keyword">int</span>[][] obstacleGrid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m=obstacleGrid.length;</span><br><span class="line">        <span class="keyword">int</span> n=obstacleGrid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][j]==<span class="number">0</span>)&#123;</span><br><span class="line">                dp[<span class="number">0</span>][j]=<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[i][<span class="number">0</span>]==<span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(obstacleGrid[i][j]==<span class="number">1</span>)&#123;</span><br><span class="line">                    dp[i][j]=<span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i][j] = dp[i-<span class="number">1</span>][j] + dp[i][j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4、Minimum-Path-Sum"><a href="#4、Minimum-Path-Sum" class="headerlink" title="4、Minimum Path Sum"></a>4、Minimum Path Sum</h2><p>Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.</p>
+<p>Note: You can only move either down or right at any point in time.</p>
+<p>Example:</p>
+<p>Input:<br>[<br>  [1,3,1],<br>  [1,5,1],<br>  [4,2,1]<br>]<br>Output: 7<br>Explanation: Because the path 1→3→1→1→1 minimizes the sum.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m=grid.length;</span><br><span class="line">        <span class="keyword">int</span> n=grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(m==<span class="number">0</span> || n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span>[][] dp=<span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        <span class="comment">// init</span></span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>]=grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>]+grid[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>]+grid[<span class="number">0</span>][j];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;n;j++)&#123;</span><br><span class="line">                dp[i][j]=Math.min(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>])+grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5、Longest-Valid-Parentheses"><a href="#5、Longest-Valid-Parentheses" class="headerlink" title="5、Longest Valid Parentheses"></a>5、Longest Valid Parentheses</h2><p>Given a string containing just the characters ‘(‘ and ‘)’, find the length of the longest valid (well-formed) parentheses substring.</p>
+<p>Example 1:</p>
+<p>Input: “(()”<br>Output: 2<br>Explanation: The longest valid parentheses substring is “()”<br>Example 2:</p>
+<p>Input: “)()())”<br>Output: 4<br>Explanation: The longest valid parentheses substring is “()()”</p>
+<p>dp[i]表示以s[i]结尾的括号最长有效长度；<br>if(ch[i])==’(‘ dp[i]=0;</p>
+<p>else if(ch[i]==’)’){<br>    if(ch[i-1]==’(‘)<br>        dp[i]=dp[i-2]+2;<br>    else<br>        if(s[i-dp[i-1]-1]==’(‘)<br>            dp[i]= dp[i-1] + 2 + dp[i-dp[i-1]-2];<br>}<br>维护一个全局变量 max，每次dp[i]更新时就和max打擂台。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestValidParentheses</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s==<span class="keyword">null</span> ||s.length()==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len=s.length();</span><br><span class="line">        <span class="keyword">char</span>[] ch=s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[len];<span class="comment">// dp[i]表示以s[i]结尾的字符最长有效长度</span></span><br><span class="line">        <span class="comment">//dp[0]=1;</span></span><br><span class="line">        <span class="keyword">int</span> max=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(ch[i]==<span class="string">')'</span> )&#123;</span><br><span class="line">                <span class="keyword">if</span>(ch[i-<span class="number">1</span>]==<span class="string">'('</span> )&#123;</span><br><span class="line">                    dp[i]=((i-<span class="number">2</span>&gt;=<span class="number">0</span>) ? dp[i-<span class="number">2</span>]:<span class="number">0</span>) + <span class="number">2</span>;</span><br><span class="line">                    max=Math.max(max,dp[i]);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;<span class="comment">//ch[i-1]==')'</span></span><br><span class="line">                    <span class="keyword">if</span>(i-dp[i-<span class="number">1</span>]-<span class="number">1</span>&gt;=<span class="number">0</span> &amp;&amp; ch[i-dp[i-<span class="number">1</span>]-<span class="number">1</span>]==<span class="string">'('</span> )&#123;</span><br><span class="line">                        dp[i]=dp[i-<span class="number">1</span>]+<span class="number">2</span>+((i-dp[i-<span class="number">1</span>]-<span class="number">2</span>&gt;=<span class="number">0</span>)?dp[i-dp[i-<span class="number">1</span>]-<span class="number">2</span>]:<span class="number">0</span>);</span><br><span class="line">                        max=Math.max(max,dp[i]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="comment">//else ch[i]=='(' -&gt; dp[i]=0</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6、Maximal-Rectangle"><a href="#6、Maximal-Rectangle" class="headerlink" title="6、Maximal Rectangle"></a>6、Maximal Rectangle</h1><p>Given a 2D binary matrix filled with 0’s and 1’s, find the largest rectangle containing only 1’s and return its area.</p>
+<p>Example:</p>
+<p>Input:<br>[<br>  [“1”,”0”,”1”,”0”,”0”],<br>  [“1”,”0”,”1”,”1”,”1”],<br>  [“1”,”1”,”1”,”1”,”1”],<br>  [“1”,”0”,”0”,”1”,”0”]<br>]<br>Output: 6</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalRectangle</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span> || matrix.length==<span class="number">0</span> ||matrix[<span class="number">0</span>].length==<span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m=matrix.length;</span><br><span class="line">        <span class="keyword">int</span> n=matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] height=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">//表示matrix[i][j]为底的连续1的高度</span></span><br><span class="line">        <span class="keyword">int</span>[] left=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// 表示matrix[i][j]向左边连续1的长度</span></span><br><span class="line">        <span class="keyword">int</span>[] right=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// 表示matrix[i][j]向右连续1的长度</span></span><br><span class="line">        <span class="keyword">int</span> maxArea=<span class="number">0</span>;<span class="comment">// maxArea=(right[i]-left[i]+1)*height[i];</span></span><br><span class="line">        Arrays.fill(right,n-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> rB=n-<span class="number">1</span>;<span class="comment">// rB 表示矩形右边的边界</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=n-<span class="number">1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">                <span class="comment">//更新right</span></span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j]==<span class="string">'1'</span>)&#123;</span><br><span class="line">                    right[j]=Math.min(right[j],rB);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    rB=j-<span class="number">1</span>;</span><br><span class="line">                    right[j]=n-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> lB=<span class="number">0</span>;<span class="comment">//lB表示矩形左边的边界</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="comment">//更新height和left</span></span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j]==<span class="string">'1'</span>)&#123;</span><br><span class="line">                    left[j]=Math.max(left[j],lB);</span><br><span class="line">                    height[j]++;</span><br><span class="line">                    maxArea=Math.max(maxArea,(right[j]-left[j]+<span class="number">1</span>)*height[j]);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    lB=j+<span class="number">1</span>;</span><br><span class="line">                    left[j]=<span class="number">0</span>;</span><br><span class="line">                    height[j]=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxArea;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间时间复杂度为O(n * m)，空间复杂度为O(n);</p>
+<h1 id="7、Maximum-Product-Subarray"><a href="#7、Maximum-Product-Subarray" class="headerlink" title="7、Maximum Product Subarray"></a>7、Maximum Product Subarray</h1><p>Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.</p>
+<p>Example 1:</p>
+<p>Input: [2,3,-2,4]<br>Output: 6<br>Explanation: [2,3] has the largest product 6.<br>Example 2:</p>
+<p>Input: [-2,0,-1]<br>Output: 0<br>Explanation: The result cannot be 2, because [-2,-1] is not a subarray.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m=nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] max=<span class="keyword">new</span> <span class="keyword">int</span>[m];<span class="comment">//max[i]表示以i结尾的子数组乘积最大值</span></span><br><span class="line">        <span class="keyword">int</span>[] min=<span class="keyword">new</span> <span class="keyword">int</span>[m];<span class="comment">//min[i]表示以i结尾的子数组乘积最小值</span></span><br><span class="line">        </span><br><span class="line">        max[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        min[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> res=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            max[i]=Math.max(Math.max(max[i-<span class="number">1</span>]*nums[i],min[i-<span class="number">1</span>]*nums[i]),nums[i]);</span><br><span class="line">            min[i]=Math.min(Math.min(max[i-<span class="number">1</span>]*nums[i],min[i-<span class="number">1</span>]*nums[i]),nums[i]);</span><br><span class="line">            res=Math.max(max[i],res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优化空间复杂度到O(1)；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums==<span class="keyword">null</span> || nums.length==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m=nums.length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> imax=nums[<span class="number">0</span>];<span class="comment">// 表示以i结尾的最大子串乘积</span></span><br><span class="line">        <span class="keyword">int</span> imin=nums[<span class="number">0</span>];<span class="comment">// 表示以i结尾的最小子串乘积</span></span><br><span class="line">        <span class="keyword">int</span> res=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> temp=imax;<span class="comment">// 注意，在此位置记录imax的值，因为接下来要更新imax</span></span><br><span class="line">            imax=Math.max(Math.max(imax*nums[i],imin*nums[i]),nums[i]);</span><br><span class="line">            imin=Math.min(Math.min(temp*nums[i],imin*nums[i]),nums[i]);</span><br><span class="line">            res=Math.max(imax,res);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="8、Maximal-Square"><a href="#8、Maximal-Square" class="headerlink" title="8、Maximal Square"></a>8、Maximal Square</h1><p>Given a 2D binary matrix filled with 0’s and 1’s, find the largest square containing only 1’s and return its area.</p>
+<p>Example:</p>
+<p>Input: </p>
+<p>1 0 1 0 0<br>1 0 1 1 1<br>1 1 1 1 1<br>1 0 0 1 0</p>
+<p>Output: 4</p>
+<p>这一题类似于求矩形最大面积，把长度和高度取最小值后平方。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;<span class="comment">//坐标型</span></span><br><span class="line">        <span class="keyword">if</span>(matrix==<span class="keyword">null</span> || matrix.length==<span class="number">0</span> ||matrix[<span class="number">0</span>].length==<span class="number">0</span> )</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m=matrix.length;</span><br><span class="line">        <span class="keyword">int</span> n=matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[] height=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">//表示matrix[i][j]为底的连续1的高度</span></span><br><span class="line">        <span class="keyword">int</span>[] left=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// 表示matrix[i][j]向左边连续1的长度</span></span><br><span class="line">        <span class="keyword">int</span>[] right=<span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">// 表示matrix[i][j]向右连续1的长度</span></span><br><span class="line">        <span class="keyword">int</span> maxArea=<span class="number">0</span>;<span class="comment">// </span></span><br><span class="line">        Arrays.fill(right,n-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;m;i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> rB=n-<span class="number">1</span>;<span class="comment">// rB 表示正方形右边的边界</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=n-<span class="number">1</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">                <span class="comment">//更新right</span></span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j]==<span class="string">'1'</span>)&#123;</span><br><span class="line">                    right[j]=Math.min(right[j],rB);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    rB=j-<span class="number">1</span>;</span><br><span class="line">                    right[j]=n-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">int</span> lB=<span class="number">0</span>;<span class="comment">//lB表示正方形左边的边界</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;n;j++)&#123;</span><br><span class="line">                <span class="comment">//更新height和left</span></span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j]==<span class="string">'1'</span>)&#123;</span><br><span class="line">                    left[j]=Math.max(left[j],lB);</span><br><span class="line">                    height[j]++;</span><br><span class="line">                    <span class="keyword">int</span> temp=Math.min(right[j]-left[j]+<span class="number">1</span>,height[j]);</span><br><span class="line">                    maxArea=Math.max(maxArea, temp*temp);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    lB=j+<span class="number">1</span>;</span><br><span class="line">                    left[j]=<span class="number">0</span>;</span><br><span class="line">                    height[j]=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxArea;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9、Longest-Increasing-Subsequence-LIS"><a href="#9、Longest-Increasing-Subsequence-LIS" class="headerlink" title="9、Longest Increasing Subsequence(LIS)"></a>9、Longest Increasing Subsequence(LIS)</h1><p>Given an unsorted array of integers, find the length of longest increasing subsequence.</p>
+<p>Example:</p>
+<p>Input: [10,9,2,5,3,7,101,18]<br>Output: 4<br>Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;<span class="comment">//坐标型问题</span></span><br><span class="line">        <span class="keyword">if</span>(nums.length==<span class="number">0</span> || nums==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len=nums.length;</span><br><span class="line">        <span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[len];<span class="comment">// dp[i]表示以nums[i]结尾的LIS</span></span><br><span class="line">        Arrays.fill(dp,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> maxLen=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=i;j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(nums[j]&lt;nums[i])&#123;</span><br><span class="line">                    dp[i]=Math.max(dp[i],dp[j]+<span class="number">1</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            maxLen=Math.max(maxLen,dp[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxLen;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度为O(n^2),空间复杂度为O(n);</p>
+<p>使用二分法+贪心可以将时间复杂度提升至O(nlogn),空间复杂度依然是O(n);<br>假设存在一个序列d[1..9] = 2 1 5 3 6 4 8 9 7，可以看出来它的LIS长度为5。<br>定义一个序列B，然后令 i = 1 to 9 逐个考察这个序列。此外，我们用一个变量Len来记录现在最长算到多少了。<br>首先，把d[1]有序地放到B里，令B[1] = 2，就是说当只有1一个数字2的时候，长度为1的LIS的最小末尾是2。这时Len=1</p>
+<p>然后，把d[2]有序地放到B里，令B[1] = 1，就是说长度为1的LIS的最小末尾是1，d[1]=2已经没用了。这时Len=1</p>
+<p>接着，d[3] = 5，d[3]&gt;B[1]，所以令B[1+1]=B[2]=d[3]=5，就是说长度为2的LIS的最小末尾是5。这时候B[1..2] = 1, 5，Len＝2</p>
+<p>再来，d[4] = 3，它正好加在1,5之间，放在1的位置显然不合适，因为1小于3，长度为1的LIS最小末尾应该是1，这样很容易推知，长度为2的LIS最小末尾是3，于是可以把5淘汰掉，这时候B[1..2] = 1, 3，Len = 2</p>
+<p>继续，d[5] = 6，它在3后面，因为B[2] = 3, 而6在3后面，于是很容易可以推知B[3] = 6, 这时B[1..3] = 1, 3, 6， Len = 3 了噢。</p>
+<p>第6个, d[6] = 4，你看它在3和6之间，于是我们就可以把6替换掉，得到B[3] = 4。B[1..3] = 1, 3, 4， Len继续等于3</p>
+<p>第7个, d[7] = 8，它很大，比4大，嗯。于是B[4] = 8。Len变成4了</p>
+<p>第8个, d[8] = 9，得到B[5] = 9，嗯。Len继续增大，到5了。</p>
+<p>最后一个, d[9] = 7，它在B[3] = 4和B[4] = 8之间，所以我们知道，最新的B[4] =7，B[1..5] = 1, 3, 4, 7, 9，Len = 5。</p>
+<p>于是我们知道了LIS的长度为5。</p>
+<p>!!!!! 注意。这个1,3,4,7,9不是LIS，它只是存储的对应长度LIS的最小末尾。有了这个末尾，我们就可以一个一个地插入数据。虽然最后一个d[9] = 7更新进去对于这组数据没有什么意义，但是如果后面再出现两个数字 8 和 9，那么就可以把8更新到d[5], 9更新到d[6]，得出LIS的长度为6。</p>
+<p>然后应该发现一件事情了：在B中插入数据是有序的，而且是进行替换而不需要挪动——也就是说，我们可以使用二分查找，将每一个数字的插入时间优化到O(logN) <del>~</del> 于是算法的时间复杂度就降低到了O(Nlog N)！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length==<span class="number">0</span> || nums==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 记录LIS的每个长度最后一个数对应的最小值</span></span><br><span class="line">        <span class="keyword">int</span>[] record=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        record[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> end=<span class="number">0</span>;<span class="comment">// 维持LIS的最后一个元素的索引</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">            <span class="comment">//如果当前数比最后一个数还大,直接添加</span></span><br><span class="line">            <span class="keyword">if</span>(nums[i]&gt;record[end])&#123;</span><br><span class="line">                record[++end]=nums[i];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">// 在record中找到第一个大于等于nums[i]的数字</span></span><br><span class="line">                <span class="keyword">int</span> index=findFirstLarge(record,nums[i],<span class="number">0</span>,end);</span><br><span class="line">                record[index]=nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> end+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//找到第一个大于等于nums的位置</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">findFirstLarge</span><span class="params">(<span class="keyword">int</span>[] record,<span class="keyword">int</span> nums,<span class="keyword">int</span> left,<span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid=left+(right-left)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(record[mid]&lt;nums)&#123;</span><br><span class="line">                left=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;<span class="comment">//大于等于</span></span><br><span class="line">                <span class="keyword">if</span>(mid==<span class="number">0</span> || record[mid-<span class="number">1</span>]&lt;nums )&#123;</span><br><span class="line">                    <span class="keyword">return</span> mid;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    right=mid-<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/20/Socket网络编程之TCP/" class="archive-article-date">
-  	<time datetime="2019-12-20T13:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/20/Socket网络编程之TCP/">Socket网络编程之TCP</a>
-    </h1>
-  
+      
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/04/30/动态规划之坐标型问题/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/10/Socket网络编程之UDP广播/" class="archive-article-date">
-  	<time datetime="2019-12-10T12:18:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-10</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2020/05/01/线程池的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          线程池的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/29/Java-并发编程实战/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java 并发编程实战</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/10/Socket网络编程之UDP广播/">Socket网络编程之UDP广播</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#动态规划解题步骤："><span class="toc-number">1.</span> <span class="toc-text">动态规划解题步骤：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#坐标型动态规划："><span class="toc-number">2.</span> <span class="toc-text">坐标型动态规划：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1、Maximum-Subarray"><span class="toc-number">3.</span> <span class="toc-text">1、Maximum Subarray</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2、Unique-Paths"><span class="toc-number">3.1.</span> <span class="toc-text">2、Unique Paths</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、Unique-Paths-II"><span class="toc-number">3.2.</span> <span class="toc-text">3、Unique Paths II</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、Minimum-Path-Sum"><span class="toc-number">3.3.</span> <span class="toc-text">4、Minimum Path Sum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、Longest-Valid-Parentheses"><span class="toc-number">3.4.</span> <span class="toc-text">5、Longest Valid Parentheses</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6、Maximal-Rectangle"><span class="toc-number">4.</span> <span class="toc-text">6、Maximal Rectangle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7、Maximum-Product-Subarray"><span class="toc-number">5.</span> <span class="toc-text">7、Maximum Product Subarray</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8、Maximal-Square"><span class="toc-number">6.</span> <span class="toc-text">8、Maximal Square</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9、Longest-Increasing-Subsequence-LIS"><span class="toc-number">7.</span> <span class="toc-text">9、Longest Increasing Subsequence(LIS)</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/02/Socket网络编程/" class="archive-article-date">
-  	<time datetime="2019-12-02T10:33:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/02/Socket网络编程/">Socket网络编程之基础知识</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/31/动态规划之双序列型问题/" class="archive-article-date">
-  	<time datetime="2019-10-31T07:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/31/动态规划之双序列型问题/">动态规划之双序列型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/30/动态规划之区间型问题/" class="archive-article-date">
-  	<time datetime="2019-10-30T01:47:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/30/动态规划之区间型问题/">动态规划之区间型问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/动态规划之背包问题/" class="archive-article-date">
-  	<time datetime="2019-10-29T03:39:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/动态规划之背包问题/">动态规划之背包问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/26/动态规划之划分型问题/" class="archive-article-date">
-  	<time datetime="2019-10-26T12:42:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/26/动态规划之划分型问题/">动态规划之划分型问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/26/事务/" class="archive-article-date">
-  	<time datetime="2019-09-26T13:35:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-26</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/26/事务/">事务</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/25/MySQL锁相关的问题/" class="archive-article-date">
-  	<time datetime="2019-09-25T11:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/25/MySQL锁相关的问题/">MySQL锁相关的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/09/23/MySQL索引与算法/" class="archive-article-date">
-  	<time datetime="2019-09-23T13:29:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/09/23/MySQL索引与算法/">MySQL索引与算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -450,8 +411,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
